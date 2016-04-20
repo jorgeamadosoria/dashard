@@ -5,6 +5,6 @@
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/java"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/resources"/>
         <property name="java-output-path" value="/notube/target/classes"/>
-        <property name="context-root" value="skillradar"/>
+        <property name="context-root" value="dashard"/>
     </wb-module>
 </project-modules>
