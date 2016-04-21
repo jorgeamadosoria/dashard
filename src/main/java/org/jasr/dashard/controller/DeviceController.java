@@ -38,6 +38,7 @@ public class DeviceController {
 
     @RequestMapping(value = "/upsert", method = RequestMethod.POST)
     public void upsert(Device device) throws IOException {
+    	device.setAccessId(CommUtils.generateAccessId());
         deviceDAO.upsert(device);
     }
 

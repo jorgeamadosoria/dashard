@@ -12,7 +12,7 @@ public class CommUtils {
 
     
     public static String generateAccessId(){
-        return "";
+        return "randomize me";
     }
     
     public static List<Metrics> parseMetricsString(Long deviceId,String metrics){

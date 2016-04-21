@@ -6,6 +6,8 @@ import org.flywaydb.core.Flyway;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import com.zaxxer.hikari.HikariConfig;
@@ -25,7 +27,16 @@ class PersistenceConfig {
         flyway.migrate();
         return flyway;
     }
-
+    
+    @Bean
+    public DataSourceTransactionManager transactionManager() {
+    	return new DataSourceTransactionManager(dataSource());
+    }
+    
+    @Bean
+    public JdbcTemplate jdbcTemplate() {
+    	return new JdbcTemplate(dataSource());
+    }
     @Bean
     public DataSource dataSource() {
         HikariConfig config = new HikariConfig();
