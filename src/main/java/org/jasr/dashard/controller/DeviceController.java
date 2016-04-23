@@ -4,47 +4,54 @@ import java.io.IOException;
 import java.util.List;
 
 import org.jasr.dashard.dao.DeviceDAO;
+import org.jasr.dashard.dao.MetricsDAO;
 import org.jasr.dashard.domain.Device;
+import org.jasr.dashard.domain.Metrics;
 import org.jasr.dashard.utils.CommUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
 
-@RestController
+@Controller
 @RequestMapping("/devices")
 public class DeviceController {
 
     @Autowired
-    private DeviceDAO deviceDAO;
+    private DeviceDAO  deviceDAO;
+    @Autowired
+    private MetricsDAO metricsDAO;
+    @Autowired
+    private CommUtils  commUtils;
 
     @RequestMapping(value = "/{accessId}/metrics", method = RequestMethod.POST)
-    public void report(@PathVariable String accessId,String metrics){
-    }
-    
-    @RequestMapping(value = "/{accessId}/switches", method = RequestMethod.GET)
-    public String order(@PathVariable String accessId){
-        
+    public void report(@PathVariable String accessId, String metricsStr) {
+
         Device device = deviceDAO.get(accessId);
-        return CommUtils.generateSwitchString(device.getSwitches());
+        if (device != null) {
+            List<Metrics> metrics = commUtils.parseMetricsString(device.getId(), metricsStr);
+            metricsDAO.upsert(device.getId(),metrics);
+        }
     }
 
-    @RequestMapping(value = "/list", method = RequestMethod.GET)
-    public List<Device> list() {
-            return deviceDAO.list();
+    @RequestMapping(value = "/{accessId}/switches", method = RequestMethod.GET)
+    public String order(@PathVariable String accessId) {
 
-    }
-
-    @RequestMapping(value = "/upsert", method = RequestMethod.POST)
-    public void upsert(Device device) throws IOException {
-    	device.setAccessId(CommUtils.generateAccessId());
-        deviceDAO.upsert(device);
+        Device device = deviceDAO.get(accessId);
+        return commUtils.generateSwitchString(device.getSwitches());
     }
 
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.POST)
     public void upsert(@PathVariable Long id) throws IOException {
         deviceDAO.delete(id);
+    }
+
+    @RequestMapping(value = "/upsert", method = RequestMethod.POST)
+    public String upsert(Device device) throws IOException {
+        device.setAccessId(commUtils.generateAccessId());
+        deviceDAO.upsert(device);
+        return "redirect:/upsert.html";
     }
 
 }
