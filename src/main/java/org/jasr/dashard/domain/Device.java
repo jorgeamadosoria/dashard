@@ -1,6 +1,9 @@
 package org.jasr.dashard.domain;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import org.springframework.util.CollectionUtils;
 
 public class Device extends BaseEntity {
 

@@ -27,6 +27,13 @@ public class MetricsDAOImpl implements MetricsDAO {
                 new BeanPropertyRowMapper<Metrics>(Metrics.class));
     }
 
+    public void updateValues(List<Metrics> list) {
+        for (Metrics metrics : list) {
+            updateValue(metrics);
+        }
+
+    }
+
     public void updateValue(Metrics entity) {
         template.update(env.getProperty("update.metrics.value"), entity.getValue(), entity.getDate(), entity.getCode(),
                 entity.getDeviceId());
@@ -34,14 +41,15 @@ public class MetricsDAOImpl implements MetricsDAO {
                 entity.getDate());
 
     }
-    
-    public void upsert(List<Metrics> entities) {
-        for(Metrics metrics:entities){
-            upsert(metrics);
+
+    public void upsert(Long deviceId, List<Metrics> entities) {
+        for (Metrics metrics : entities) {
+            upsert(deviceId,metrics);
         }
     }
 
-    public void upsert(Metrics entity) {
+    public void upsert(Long deviceId, Metrics entity) {
+        entity.setDeviceId(deviceId);
         if (entity.getId() == null)
             template.update(env.getProperty("insert.metrics"), entity.getDeviceId(), entity.getName(), entity.getCode(),
                     entity.getDate());

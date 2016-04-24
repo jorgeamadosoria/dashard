@@ -14,59 +14,66 @@ import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.CollectionUtils;
 
 @Repository
 @Transactional
-public class DeviceDAOImpl implements DeviceDAO{
+public class DeviceDAOImpl implements DeviceDAO {
 
     @Autowired
-    private Environment      env;
+    private Environment  env;
     @Resource
-    private JdbcTemplate     template;
+    private JdbcTemplate template;
 
     @Autowired
-    private ControlsDAO controlsDAO;
-    
+    private ControlsDAO  controlsDAO;
+
     @Autowired
-    private MetricsDAO metricsDAO;
-    
-    
-    
-    public List<Device> list(){
-        List<Device> devices = template.query(env.getProperty("list.devices"),
-                new BeanPropertyRowMapper<Device>(Device.class));
+    private MetricsDAO   metricsDAO;
+
+    public List<Device> list() {
+        List<Device> devices = template.query(env.getProperty("list.devices"), new BeanPropertyRowMapper<Device>(Device.class));
         return devices;
     }
 
-    public void upsert(Device entity){
-        if (entity.getId() == null){
-            template.update(env.getProperty("insert.device"), entity.getName(),entity.getDescription(),entity.getAccessId());
-        }else{
-        template.update(env.getProperty("update.device"), entity.getName(),entity.getDescription(),entity.getId());
+    public void upsert(Device entity) {
+        Device tempEntity = entity;
+        if (entity.getId() == null) {
+            template.update(env.getProperty("insert.device"), entity.getName(), entity.getDescription(), entity.getAccessId());
+            tempEntity = get(entity.getAccessId());
         }
-
-        metricsDAO.upsert(entity.getMetrics());
+        else {
+            template.update(env.getProperty("update.device"), entity.getName(), entity.getDescription(), entity.getId());
+        }
+        if (entity.getMetrics() != null)
+            metricsDAO.upsert(tempEntity.getId(),entity.getMetrics());
     }
-    
-    public Device get(String accessId){
-        
-        Device device = template.queryForObject(env.getProperty("select.device.accessId"),new Object[]{accessId},
-                 new BeanPropertyRowMapper<Device>(Device.class));
-        
-        device.setSwitches(controlsDAO.list(device.getId()));
-        device.setMetrics(metricsDAO.list(device.getId()));
-        return device;
-     }
-    
-    public Device get(Long id){
-        
-       return template.queryForObject(env.getProperty("select.device"),new Object[]{id},
+
+    public Device get(String accessId) {
+
+        List<Device> devices = template.query(env.getProperty("select.device.accessId"), new Object[] { accessId },
+                new BeanPropertyRowMapper<Device>(Device.class));
+
+        if (!CollectionUtils.isEmpty(devices)) {
+            Device device = devices.get(0);
+
+            if (device != null) {
+                device.setSwitches(controlsDAO.list(device.getId()));
+                device.setMetrics(metricsDAO.list(device.getId()));
+            }
+            return device;
+        }
+        return null;
+    }
+
+    public Device get(Long id) {
+
+        return template.queryForObject(env.getProperty("select.device"), new Object[] { id },
                 new BeanPropertyRowMapper<Device>(Device.class));
     }
-    public void delete(Long id){
+
+    public void delete(Long id) {
         template.update(env.getProperty("delete.device"), id);
     }
-    
-
 
 }
