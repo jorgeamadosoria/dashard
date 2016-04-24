@@ -46,9 +46,9 @@ public class DeviceDAOImpl implements DeviceDAO {
             template.update(env.getProperty("update.device"), entity.getName(), entity.getDescription(), entity.getId());
         }
         if (entity.getMetrics() != null)
-            metricsDAO.upsert(tempEntity.getId(),entity.getMetrics());
+            metricsDAO.upsert(tempEntity.getId(), entity.getMetrics());
         if (entity.getSwitches() != null)
-            controlsDAO.upsert(tempEntity.getId(),entity.getSwitches());
+            controlsDAO.upsert(tempEntity.getId(), entity.getSwitches());
     }
 
     public Device get(String accessId) {
@@ -56,6 +56,10 @@ public class DeviceDAOImpl implements DeviceDAO {
         List<Device> devices = template.query(env.getProperty("select.device.accessId"), new Object[] { accessId },
                 new BeanPropertyRowMapper<Device>(Device.class));
 
+        return populateDevice(devices);
+    }
+
+    Device populateDevice(List<Device> devices) {
         if (!CollectionUtils.isEmpty(devices)) {
             Device device = devices.get(0);
 
@@ -70,11 +74,16 @@ public class DeviceDAOImpl implements DeviceDAO {
 
     public Device get(Long id) {
 
-        return template.queryForObject(env.getProperty("select.device"), new Object[] { id },
+        List<Device> devices = template.query(env.getProperty("select.device"), new Object[] { id },
                 new BeanPropertyRowMapper<Device>(Device.class));
+
+        return populateDevice(devices);
     }
 
     public void delete(Long id) {
+        template.update(env.getProperty("delete.metrics.by.device"), id);
+        template.update(env.getProperty("delete.switches.by.device"), id);
+
         template.update(env.getProperty("delete.device"), id);
     }
 

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<title>SkillRadar</title>
+<title>Dashboard for Arduino</title>
 <link href="dist/css/bootstrap.min.css" rel="stylesheet">
 <link href="dist/css/jquery-ui.min.css" rel="stylesheet">
 <link href="dist/css/font-awesome.min.css" rel="stylesheet">
@@ -9,29 +9,20 @@
 </head>
 <body>
 
-	<form action="devices/upsert" method="POST">
-		<input name="name" id="name"> <input name="description"
-			id="description"> <input type="submit">
-			
-			<div id = "metrics">
-			<input name="met_name" id="met_name"> 
-			<input name="met_code" id="met_code"> 
-			<input type="button" value="Add">
-			</div>
-			<div id = "switches">
-			<input name="swi_name" id="swi_name"> 
-			<input name="swi_description" id="swi_description"> 
-			<input name="swi_pin" id="swi_pin"> 
-			<input type="button" value="Add">
-			</div>
-	</form>
+	<div id="name"></div>
+	<div id="description"></div>
+
+Metrics:
+	<div id="metrics_wrapper"></div>
+	Switches:
+	<div id="switches_wrapper"></div>
 
 
 	<script src="dist/js/jquery.min.js"></script>
 	<script src="dist/js/jquery-ui.min.js"></script>
 	<script src="dist/js/dashard.js"></script>
 	<script>
-		
+		initView();
 	</script>
 </body>
 

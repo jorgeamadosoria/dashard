@@ -10,19 +10,16 @@
 <body>
 
 	<form action="devices/upsert" method="POST">
+	<input name="id" id="id" type="hidden">
 		<label for="name">Name</label><input name="name" id="name"> <label
 			for="description">Description</label><input name="description"
-			id="description"> <input type="submit">
-		<label for="name">Metrics</label> <input id="metrics_add_button" type="button" value="Add">
-		<div id="metrics_wrapper">
-			
-		</div>
-		<label for="name">Switches</label>
-		<input id="switches_add_button" type="button" value="Add">
-		<div id="switches_wrapper">
-			
-		</div>
-			
+			id="description"> <label for="name">Metrics</label> <input
+			id="metrics_add_button" type="button" value="Add">
+		<div id="metrics_wrapper"></div>
+		<label for="name">Switches</label> <input id="switches_add_button"
+			type="button" value="Add">
+		<div id="switches_wrapper"></div>
+		<input type="submit">
 	</form>
 
 
@@ -30,7 +27,7 @@
 	<script src="dist/js/jquery-ui.min.js"></script>
 	<script src="dist/js/dashard.js"></script>
 	<script>
-		
+		$(document).ready(initUpsert);
 	</script>
 </body>
 

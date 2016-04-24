@@ -35,6 +35,11 @@ public class DeviceRestController {
     public String order(Long id) {
         return commUtils.generateSwitchString(controlsDAO.list(id));
     }
+    
+    @RequestMapping(value = "/view", method = RequestMethod.GET)
+    public Device get(Long id) {
+        return deviceDAO.get(id);
+    }
 
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     public List<Device> list() {

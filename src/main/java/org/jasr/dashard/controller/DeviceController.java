@@ -42,16 +42,17 @@ public class DeviceController {
         return commUtils.generateSwitchString(device.getSwitches());
     }
 
-    @RequestMapping(value = "/delete/{id}", method = RequestMethod.POST)
-    public void upsert(@PathVariable Long id) throws IOException {
+    @RequestMapping(value = "/delete", method = RequestMethod.GET)
+    public String upsert(Long id) throws IOException {
         deviceDAO.delete(id);
+        return "redirect:/index.html";
     }
 
     @RequestMapping(value = "/upsert", method = RequestMethod.POST)
     public String upsert(Device device) throws IOException {
         device.setAccessId(commUtils.generateAccessId());
         deviceDAO.upsert(device);
-        return "redirect:/upsert.html";
+        return "redirect:/index.html";
     }
 
 }
