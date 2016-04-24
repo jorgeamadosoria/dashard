@@ -9,8 +9,8 @@ public interface ControlsDAO {
 
     public List<Switch> list(Long id);
 
-    public void upsert(List<Switch> entities);
-    public void upsert(Switch entity);
+    public void upsert(Long deviceId,List<Switch> entities);
+    public void upsert(Long deviceId,Switch entity);
 
     public void delete(Long id);
 }

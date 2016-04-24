@@ -7,7 +7,7 @@ $(document).ready(function() {
     $(add_button).click(function(e){ //on add input button click
         e.preventDefault();
         if(x < max_fields){ //max input box allowed
-            $(wrapper).append('<div><input name="metrics[' + (x-1) + '].code"> <input name="metrics[' + (x-1) + '].name"><button class="remove_field">Remove</button></div>'); //add input box
+            $(wrapper).append('<div>Code:<input name="metrics[' + (x-1) + '].code"> Name:<input name="metrics[' + (x-1) + '].name"><button class="remove_field">Remove</button></div>'); //add input box
             x++; //text box increment
         }
     });
@@ -26,7 +26,7 @@ $(document).ready(function() {
     $(add_button).click(function(e){ //on add input button click
         e.preventDefault();
         if(x < max_fields){ //max input box allowed
-            $(wrapper).append('<input name="switches[' + (x-1) + '].name"> <input name="switches[' + (x-1) + '].description"> <input name="switches[' + (x-1) + '].pin"><button class="remove_field">Remove</button></div>'); //add input box
+            $(wrapper).append('Name:<input name="switches[' + (x-1) + '].name"> Description:<input name="switches[' + (x-1) + '].description"> Pin:<input name="switches[' + (x-1) + '].pin"><button class="remove_field">Remove</button></div>'); //add input box
             x++; //text box increment
         }
     });
