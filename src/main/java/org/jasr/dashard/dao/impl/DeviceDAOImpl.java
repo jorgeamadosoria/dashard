@@ -47,6 +47,8 @@ public class DeviceDAOImpl implements DeviceDAO {
         }
         if (entity.getMetrics() != null)
             metricsDAO.upsert(tempEntity.getId(),entity.getMetrics());
+        if (entity.getSwitches() != null)
+            controlsDAO.upsert(tempEntity.getId(),entity.getSwitches());
     }
 
     public Device get(String accessId) {

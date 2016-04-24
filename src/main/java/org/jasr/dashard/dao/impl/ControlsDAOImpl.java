@@ -5,7 +5,6 @@ import java.util.List;
 import javax.annotation.Resource;
 
 import org.jasr.dashard.dao.ControlsDAO;
-import org.jasr.dashard.domain.Metrics;
 import org.jasr.dashard.domain.Switch;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
@@ -32,18 +31,20 @@ public class ControlsDAOImpl implements ControlsDAO {
                 new BeanPropertyRowMapper<Switch>(Switch.class));
     }
     
-    public void upsert(List<Switch> entities) {
-        for(Switch metrics:entities){
-            upsert(metrics);
+    public void upsert(Long deviceId,List<Switch> entities) {
+        for(Switch s:entities){
+            upsert(deviceId,s);
         }
     }
 
-    public void upsert(Switch entity) {
+    public void upsert(Long deviceId,Switch entity) {
+    	if (entity.getParentId() == null)
+    		entity.setParentId(entity.getId());
         if (entity.getId() == null)
-            template.update(env.getProperty("insert.metrics"), entity.getName(), entity.getDescription(), entity.getPin(),
-                    entity.getDeviceId(), entity.getParentId());
+            template.update(env.getProperty("insert.switch"), entity.getName(), entity.getDescription(), entity.getPin(),
+                    deviceId, entity.getParentId());
         else
-            template.update(env.getProperty("update.metrics"), entity.getName(), entity.getDescription(), entity.getPin(),
+            template.update(env.getProperty("update.switch"), entity.getName(), entity.getDescription(), entity.getPin(),
                     entity.getParentId(), entity.getId());
     }
 
