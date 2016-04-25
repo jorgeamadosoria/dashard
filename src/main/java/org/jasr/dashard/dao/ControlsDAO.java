@@ -5,7 +5,7 @@ import java.util.List;
 import org.jasr.dashard.domain.Switch;
 
 public interface ControlsDAO {
-    public void toggle(Switch entity);
+    public void toggle(Long id);
 
     public List<Switch> list(Long id);
 

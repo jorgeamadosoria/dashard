@@ -3,6 +3,7 @@ package org.jasr.dashard.controller;
 import java.io.IOException;
 import java.util.List;
 
+import org.jasr.dashard.dao.ControlsDAO;
 import org.jasr.dashard.dao.DeviceDAO;
 import org.jasr.dashard.dao.MetricsDAO;
 import org.jasr.dashard.domain.Device;
@@ -20,6 +21,8 @@ public class DeviceController {
 
     @Autowired
     private DeviceDAO  deviceDAO;
+    @Autowired
+    private ControlsDAO  controlDAO;
     @Autowired
     private MetricsDAO metricsDAO;
     @Autowired
@@ -39,7 +42,7 @@ public class DeviceController {
     public String order(@PathVariable String accessId) {
 
         Device device = deviceDAO.get(accessId);
-        return commUtils.generateSwitchString(device.getSwitches());
+        return commUtils.generatePinString(device.getSwitches());
     }
 
     @RequestMapping(value = "/delete", method = RequestMethod.GET)
@@ -54,5 +57,7 @@ public class DeviceController {
         deviceDAO.upsert(device);
         return "redirect:/index.html";
     }
+    
+
 
 }

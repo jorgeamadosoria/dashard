@@ -22,10 +22,10 @@ public class ControlsDAOImpl implements ControlsDAO {
     @Resource
     private JdbcTemplate template;
 
-    public void toggle(Switch entity) {
-        template.update(env.getProperty("select.switches.by.device"), entity.getState(), entity.getId(), entity.getId());
+    public void toggle(Long id) {
+        template.update(env.getProperty("toggle.switch"), id, id);
     }
-
+    
     public List<Switch> list(Long id) {
         return template.query(env.getProperty("select.switches.by.device"), new Object[] { id },
                 new BeanPropertyRowMapper<Switch>(Switch.class));

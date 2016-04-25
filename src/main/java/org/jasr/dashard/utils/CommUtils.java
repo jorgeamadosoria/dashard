@@ -52,19 +52,19 @@ public class CommUtils {
         return list;
     }
 
-    public String generateSwitchString(List<Switch> switches) {
+    public String generatePinString(List<Switch> switches) {
         if (!CollectionUtils.isEmpty(switches)) {
-            String hi = "";
-            String lo = "";
+            String hi = " ";
+            String lo = " ";
             for (Switch ele : switches) {
                 if (ele.getState() == 1)
                     hi += ele.getPin() + ",";
                 else
                     lo += ele.getPin() + ",";
-                hi = hi.substring(0, hi.length() - 1);
-                lo = lo.substring(0, lo.length() - 1);
-                return hi + ";" + lo;
             }
+            hi = hi.substring(0, hi.length() - 1);
+            lo = lo.substring(0, lo.length() - 1);
+            return hi.trim() + ";" + lo.trim();
         }
         return "";
     }

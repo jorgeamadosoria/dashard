@@ -19,6 +19,14 @@ function initUpsert() {
 
 	var id = $.getUrlVar('id');
 	if (id == null) {
+		var data = {
+			id : '',
+			name : '',
+			description : '',
+			metrics : {},
+			switches : {}
+		};
+		configDeviceUpsert(data);
 	} else
 		$.ajax({
 			url : "data/view",
@@ -181,14 +189,39 @@ function configDeviceView(data) {
 	for (var x = 0; x < data.switches.length; x++) {
 		$("#switches_wrapper")
 				.append(
-						'<div>Name:<span id="name"></span></br>Description:<span id="description"></span></br>'
+						'<div class="switch" >Name:<span id="name"></span></br>Description:<span id="description"></span></br>'
 								+ 'Pin:<span id="pin"></span></br>'
 								+ 'State:<span id="state"></span></br>'
+								+ '<button class="switch_toggle">Toggle</button></br>'
 								+ '</div>');
-		$("#switches_wrapper #name").text(data.switches[x].name);
-		$("#switches_wrapper #description").text(data.switches[x].description);
-		$("#switches_wrapper #pin").text(data.switches[x].pin);
-		$("#switches_wrapper #state").text(data.switches[x].state);
+		$("#switches_wrapper div.switch").last()
+				.attr('id', data.switches[x].id);
+		$("#switches_wrapper #name").last().text(data.switches[x].name);
+		$("#switches_wrapper #description").last().text(
+				data.switches[x].description);
+		$("#switches_wrapper #pin").last().text(data.switches[x].pin);
+		$("#switches_wrapper #state").last().text(data.switches[x].state);
+		$("#switches_wrapper div.switch button").last().attr("data-id",data.switches[x].id);
+		$("#switches_wrapper div.switch button").last().on("click", function(e) {
+			var id = $(this).data('id');
+					e.preventDefault();
+					$.ajax({
+						url : "data/toggle",
+						data : {
+							"deviceId" : $.getUrlVar('id'),
+							"id" : id
+						},
+						method : "POST",
+						success : updateSwitchState
+					});
+
+				})
+	}
+}
+
+function updateSwitchState(data){
+	for (var x = 0; x < data.length; x++) {
+		$("#switches_wrapper div.switch#"+ data[x].id +" #state").text(data[x].state);
 	}
 }
 
@@ -199,7 +232,7 @@ function configDeviceList(data) {
 		$(row).children().filter("#name").text(data[x].name);
 		$(row).children().filter("#accessId").text(data[x].accessId);
 		$(row).children().filter("#description").text(data[x].description);
-		row.html(row.html().replace(/\?id=/g,"?id="+data[x].id));
+		row.html(row.html().replace(/\?id=/g, "?id=" + data[x].id));
 		$("#devicesList").append(row);
 	}
 }
