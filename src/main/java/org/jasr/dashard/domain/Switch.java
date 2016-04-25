@@ -10,6 +10,11 @@ public class Switch extends BaseEntity {
     private Long   deviceId;
     private Long   parentId;
 
+    public Switch(){
+        this.id = 0L;
+        this.parentId = 0L;
+    }
+    
     public Long getId() {
         return id;
     }

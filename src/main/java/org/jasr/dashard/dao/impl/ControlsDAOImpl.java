@@ -23,24 +23,25 @@ public class ControlsDAOImpl implements ControlsDAO {
     private JdbcTemplate template;
 
     public void toggle(Long id) {
-        template.update(env.getProperty("toggle.switch"), id, id);
+        template.update(env.getProperty("toggle.switch"), id);
+        template.update(env.getProperty("toggle.children.switch"), id, id);
     }
-    
+
     public List<Switch> list(Long id) {
         return template.query(env.getProperty("select.switches.by.device"), new Object[] { id },
                 new BeanPropertyRowMapper<Switch>(Switch.class));
     }
-    
-    public void upsert(Long deviceId,List<Switch> entities) {
-        for(Switch s:entities){
-            upsert(deviceId,s);
+
+    public void upsert(Long deviceId, List<Switch> entities) {
+        for (Switch s : entities) {
+            upsert(deviceId, s);
         }
     }
 
-    public void upsert(Long deviceId,Switch entity) {
-    	if (entity.getParentId() == null)
-    		entity.setParentId(entity.getId());
-        if (entity.getId() == null)
+    public void upsert(Long deviceId, Switch entity) {
+        if (entity.getParentId() == null)
+            entity.setParentId(0L);
+        if (entity.getId() == null || entity.getId() == 0)
             template.update(env.getProperty("insert.switch"), entity.getName(), entity.getDescription(), entity.getPin(),
                     deviceId, entity.getParentId());
         else

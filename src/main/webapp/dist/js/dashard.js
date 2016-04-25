@@ -84,13 +84,18 @@ function upsertSwitchesAddButton(x) {
 						e.preventDefault();
 						$(wrapper)
 								.append(
-										'Name:<input name="switches['
+										'Id:<input name="switches['
+												+ x
+												+ '].id" value="0">'
+												+ 'Name:<input name="switches['
 												+ x
 												+ '].name"> Description:<input name="switches['
 												+ x
 												+ '].description"> Pin:<input name="switches['
 												+ x
-												+ '].pin"><button class="remove_field">Remove</button></div>'); // add
+												+ '].pin"> Parent Id:<input name="switches['
+												+ x
+												+ '].parentId" value="0"><button class="remove_field">Remove</button></div>'); // add
 						// input
 						// box
 						x++; // text box increment
@@ -138,11 +143,11 @@ function configDeviceUpsert(data) {
 	for (; x < data.switches.length; x++) {
 		$("#switches_wrapper")
 				.append(
-						'<div><input id="switches'
+						'<div>Id:<input id="switches'
 								+ x
 								+ 'id" name="switches['
 								+ x
-								+ '].id" type="hidden" value="'
+								+ '].id" readonly value="'
 								+ data.switches[x].id
 								+ '">Name:<input id="switches'
 								+ x
@@ -162,6 +167,12 @@ function configDeviceUpsert(data) {
 								+ x
 								+ '].pin" value="'
 								+ data.switches[x].pin
+								+ '"> Parent Id:<input id="switches'
+								+ x
+								+ 'parentId" name="switches['
+								+ x
+								+ '].parentId" value="'
+								+ data.switches[x].parentId
 								+ '"><button class="remove_field">Remove</button></div>');
 		$('#switches_wrapper #switches' + x + 'name').text(
 				data.switches[x].name);
@@ -189,21 +200,26 @@ function configDeviceView(data) {
 	for (var x = 0; x < data.switches.length; x++) {
 		$("#switches_wrapper")
 				.append(
-						'<div class="switch" >Name:<span id="name"></span></br>Description:<span id="description"></span></br>'
+						'<div class="switch" >Id:<span id="id"></span>Name:<span id="name"></span></br>Description:<span id="description"></span></br>'
 								+ 'Pin:<span id="pin"></span></br>'
+								+ 'Parent Id:<span id="parentId"></span></br>'
 								+ 'State:<span id="state"></span></br>'
 								+ '<button class="switch_toggle">Toggle</button></br>'
 								+ '</div>');
 		$("#switches_wrapper div.switch").last()
 				.attr('id', data.switches[x].id);
 		$("#switches_wrapper #name").last().text(data.switches[x].name);
+		$("#switches_wrapper #id").last().text(data.switches[x].id);
 		$("#switches_wrapper #description").last().text(
 				data.switches[x].description);
 		$("#switches_wrapper #pin").last().text(data.switches[x].pin);
+		$("#switches_wrapper #parentId").last().text(data.switches[x].parentId);
 		$("#switches_wrapper #state").last().text(data.switches[x].state);
-		$("#switches_wrapper div.switch button").last().attr("data-id",data.switches[x].id);
-		$("#switches_wrapper div.switch button").last().on("click", function(e) {
-			var id = $(this).data('id');
+		$("#switches_wrapper div.switch button").last().attr("data-id",
+				data.switches[x].id);
+		$("#switches_wrapper div.switch button").last().on("click",
+				function(e) {
+					var id = $(this).data('id');
 					e.preventDefault();
 					$.ajax({
 						url : "data/toggle",
@@ -219,9 +235,10 @@ function configDeviceView(data) {
 	}
 }
 
-function updateSwitchState(data){
+function updateSwitchState(data) {
 	for (var x = 0; x < data.length; x++) {
-		$("#switches_wrapper div.switch#"+ data[x].id +" #state").text(data[x].state);
+		$("#switches_wrapper div.switch#" + data[x].id + " #state").text(
+				data[x].state);
 	}
 }
 
