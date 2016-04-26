@@ -1,3 +1,8 @@
+var addSwitchTemplate = '<div>Id:<input id="id" readonly >Name:<input id="name"> Description:<input id="description"> Pin:<input id="pin"> Parent Id:<input id="parentId"><button class="remove_field">Remove</button></div>';
+var viewSwitchTemplate = '<div class="switch" >Id:<span id="id"></span>Name:<span id="name"></span></br>Description:<span id="description"></span></br>Pin:<span id="pin"></span></br>Parent Id:<span id="parentId"></span></br>State:<span id="state"></span></br><button class="switch_toggle">Toggle</button></br></div>';
+
+var addMetricsTemplate = '<div><input id="id" type="hidden" >Code:<input id="code"> Name:<input id="name"><button class="remove_field">Remove</button></div>';
+var viewMetricsTemplate = '<div>Code:<span id="code"></span></br>Name:<span id="name"></span></br>Value:<span id="value"></span></br>Date:<span id="date"></span></div>';
 $.extend({
 	getUrlVars : function() {
 		var vars = [], hash;
@@ -53,23 +58,30 @@ function upsertMetricsAddButton(x) {
 	var wrapper = $("#metrics_wrapper"); // Fields wrapper
 	var add_button = $("#metrics_add_button"); // Add button ID
 
-	$(add_button)
-			.click(
-					function(e) { // on add input button click
-						e.preventDefault();
-						$(wrapper)
-								.append(
-										'<div>Code:<input name="metrics['
-												+ x
-												+ '].code"> Name:<input name="metrics['
-												+ x
-												+ '].name"><button class="remove_field">Remove</button></div>');
-						x++;
-					});
+	$(add_button).click(function(e) { // on add input button click
+		e.preventDefault();
+		addMetrics(x++, {
+			id : 0,
+			name : '',
+			code : ''
+		})
+	});
 
 	$(wrapper).on("click", ".remove_field", function(e) { // user click on
 		// remove text
 		e.preventDefault();
+		var id = $(this).parent('div').find("#id").val();
+		if (id != 0) {
+			$.ajax({
+				url : "data/metrics/delete",
+				data : {
+					"id" : id
+				},
+				method : "POST",
+				success : function(data) {
+				}
+			});
+		}
 		$(this).parent('div').remove();
 	})
 };
@@ -78,24 +90,35 @@ function upsertSwitchesAddButton(x) {
 	var wrapper = $("#switches_wrapper"); // Fields wrapper
 	var add_button = $("#switches_add_button"); // Add button ID
 
-	$(add_button)
-			.click(
-					function(e) { // on add input button click
-						e.preventDefault();
-						addSwitch(x,{id:0,parentId:0});
-					});
+	$(add_button).click(function(e) { // on add input button click
+		e.preventDefault();
+		addSwitch(x++, {
+			id : 0,
+			parentId : 0
+		});
+	});
 
 	$(wrapper).on("click", ".remove_field", function(e) { // user click on
 		// remove text
 		e.preventDefault();
+		var id = $(this).parent('div').children().filter("#id").val();
+		if (id != 0) {
+			$.ajax({
+				url : "data/switches/delete",
+				data : {
+					"id" : id
+				},
+				method : "POST",
+				success : function(data) {
+				}
+			});
+		}
 		$(this).parent('div').remove();
 	})
 };
 // ------------------------------------------------
 function addSwitch(x, switchObj) {
-	$("#switches_wrapper")
-			.append(
-					'<div>Id:<input id="id" readonly >Name:<input id="name"> Description:<input id="description"> Pin:<input id="pin"> Parent Id:<input id="parentId"><button class="remove_field">Remove</button></div>');
+	$("#switches_wrapper").append(addSwitchTemplate);
 	$('#switches_wrapper #id').last().val(switchObj.id).attr("name",
 			"switches[" + x + "].id");
 	$('#switches_wrapper #name').last().val(switchObj.name).attr("name",
@@ -108,26 +131,29 @@ function addSwitch(x, switchObj) {
 			"name", "switches[" + x + "].parentId");
 }
 
+function addMetrics(x, metricsObj) {
+	$("#metrics_wrapper").append(addMetricsTemplate);
+	$('#metrics_wrapper #id').last().val(metricsObj.id).attr("name",
+			"metrics[" + x + "].id");
+	$('#metrics_wrapper #code').last().val(metricsObj.code).attr("name",
+			"metrics[" + x + "].code");
+	$('#metrics_wrapper #name').last().val(metricsObj.name).attr("name",
+			"metrics[" + x + "].name");
+}
+
 function configDeviceUpsert(data) {
 	$("#id").val(data.id);
 	$("#name").val(data.name);
 	$("#description").val(data.description);
 	var x = 0;
 	for (; x < data.metrics.length; x++) {
-		$("#metrics_wrapper")
-				.append(
-						'<div><input id="id" type="hidden" >Code:<input id="code"> Name:<input id="name"><button class="remove_field">Remove</button></div>');
-		$('#metrics_wrapper #id').last().val(data.metrics[x].id).attr("name",
-				"metrics[" + x + "].id");
-		$('#metrics_wrapper #code').last().val(data.metrics[x].code).attr(
-				"name", "metrics[" + x + "].code");
-		$('metrics_wrapper #name').last().val(data.metrics[x].name).attr(
-				"name", "metrics[" + x + "].name");
+
+		addMetrics(x, data.metrics[x]);
 	}
 	upsertMetricsAddButton(x);
 	x = 0;
 	for (; x < data.switches.length; x++) {
-		addSwitch(x,data.switches[x]);
+		addSwitch(x, data.switches[x]);
 	}
 	upsertSwitchesAddButton(x);
 }
@@ -158,11 +184,7 @@ function configDeviceView(data) {
 	$("#name").text(data.name);
 	$("#description").text(data.description);
 	for (var x = 0; x < data.metrics.length; x++) {
-		$("#metrics_wrapper").append(
-				'<div>Code:<span id="code"></span></br>'
-						+ 'Name:<span id="name"></span></br>'
-						+ 'Value:<span id="value"></span></br>'
-						+ 'Date:<span id="date"></span></div>');
+		$("#metrics_wrapper").append(viewMetricsTemplate);
 		$("#metrics_wrapper div").last().attr("id", data.metrics[x].id);
 		$("#metrics_wrapper #code").last().text(data.metrics[x].code);
 		$("#metrics_wrapper #name").last().text(data.metrics[x].name);
@@ -170,14 +192,7 @@ function configDeviceView(data) {
 		$("#metrics_wrapper #date").last().text(new Date(data.metrics[x].date));
 	}
 	for (var x = 0; x < data.switches.length; x++) {
-		$("#switches_wrapper")
-				.append(
-						'<div class="switch" >Id:<span id="id"></span>Name:<span id="name"></span></br>Description:<span id="description"></span></br>'
-								+ 'Pin:<span id="pin"></span></br>'
-								+ 'Parent Id:<span id="parentId"></span></br>'
-								+ 'State:<span id="state"></span></br>'
-								+ '<button class="switch_toggle">Toggle</button></br>'
-								+ '</div>');
+		$("#switches_wrapper").append(viewSwitchTemplate);
 		$("#switches_wrapper div.switch").last()
 				.attr('id', data.switches[x].id);
 		$("#switches_wrapper #name").last().text(data.switches[x].name);

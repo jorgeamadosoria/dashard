@@ -3,6 +3,7 @@ package org.jasr.dashard.controller;
 import java.io.IOException;
 import java.util.List;
 
+import org.apache.http.HttpResponse;
 import org.jasr.dashard.dao.ControlsDAO;
 import org.jasr.dashard.dao.DeviceDAO;
 import org.jasr.dashard.dao.MetricsDAO;
@@ -11,8 +12,10 @@ import org.jasr.dashard.domain.Metrics;
 import org.jasr.dashard.domain.Switch;
 import org.jasr.dashard.utils.CommUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -28,6 +31,16 @@ public class DeviceRestController {
     @Autowired
     private CommUtils  commUtils;
 
+    @RequestMapping(value = "/metrics/delete", method = RequestMethod.POST)
+    public void deleteMetrics(Long id) {
+        metricsDAO.delete(id);
+    }
+    
+    @RequestMapping(value = "/switches/delete", method = RequestMethod.POST)
+    public void deleteSwitches(Long id) {
+        controlDAO.delete(id);
+    }
+    
     @RequestMapping(value = "/metrics", method = RequestMethod.GET)
     public List<Metrics> metrics(Long id) {
         return metricsDAO.list(id);
