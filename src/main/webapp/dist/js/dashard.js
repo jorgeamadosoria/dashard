@@ -84,7 +84,7 @@ function upsertSwitchesAddButton(x) {
 						e.preventDefault();
 						$(wrapper)
 								.append(
-										'Id:<input name="switches['
+										'Id:<input readonly name="switches['
 												+ x
 												+ '].id" value="0">'
 												+ 'Name:<input name="switches['
@@ -183,6 +183,28 @@ function configDeviceUpsert(data) {
 	upsertSwitchesAddButton(x);
 }
 
+function pollMetrics() {
+	var id = $.getUrlVar('id');
+
+	$.ajax({
+		url : "data/metrics",
+		data : {
+			"id" : id
+		},
+		method : "GET",
+		success : function(data) {
+			for (var x = 0; x < data.length; x++) {
+				$("#metrics_wrapper div#" + data[x].id + " #value").text(
+						data[x].value);
+				$("#metrics_wrapper div#" + data[x].id + " #date").text(
+						new Date(data[x].date));
+			}
+		}
+	});
+
+	setTimeout(pollMetrics, 1000);
+}
+
 function configDeviceView(data) {
 	$("#name").text(data.name);
 	$("#description").text(data.description);
@@ -191,11 +213,12 @@ function configDeviceView(data) {
 				'<div>Code:<span id="code"></span></br>'
 						+ 'Name:<span id="name"></span></br>'
 						+ 'Value:<span id="value"></span></br>'
-						+ 'Date:<span id="date"></span></br>' + '</div>');
-		$("#metrics_wrapper #code").text(data.metrics[x].code);
-		$("#metrics_wrapper #name").text(data.metrics[x].name);
-		$("#metrics_wrapper #value").text(data.metrics[x].value);
-		$("#metrics_wrapper #date").text(new Date(data.metrics[x].date));
+						+ 'Date:<span id="date"></span></div>');
+		$("#metrics_wrapper div").last().attr("id", data.metrics[x].id);
+		$("#metrics_wrapper #code").last().text(data.metrics[x].code);
+		$("#metrics_wrapper #name").last().text(data.metrics[x].name);
+		$("#metrics_wrapper #value").last().text(data.metrics[x].value);
+		$("#metrics_wrapper #date").last().text(new Date(data.metrics[x].date));
 	}
 	for (var x = 0; x < data.switches.length; x++) {
 		$("#switches_wrapper")
@@ -233,6 +256,8 @@ function configDeviceView(data) {
 
 				})
 	}
+
+	pollMetrics();
 }
 
 function updateSwitchState(data) {

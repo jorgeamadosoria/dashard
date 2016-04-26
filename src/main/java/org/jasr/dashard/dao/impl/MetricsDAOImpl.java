@@ -35,10 +35,8 @@ public class MetricsDAOImpl implements MetricsDAO {
     }
 
     public void updateValue(Metrics entity) {
-        template.update(env.getProperty("update.metrics.value"), entity.getValue(), entity.getDate(), entity.getCode(),
+        template.update(env.getProperty("update.metrics.value"), entity.getValue(), entity.getCode(),
                 entity.getDeviceId());
-        template.update(env.getProperty("insert.metrics.history"), entity.getDeviceId(), entity.getCode(), entity.getValue());
-
     }
 
     public void upsert(Long deviceId, List<Metrics> entities) {

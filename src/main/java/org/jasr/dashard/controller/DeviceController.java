@@ -34,7 +34,7 @@ public class DeviceController {
         Device device = deviceDAO.get(accessId);
         if (device != null) {
             List<Metrics> metrics = commUtils.parseMetricsString(device.getId(), metricsStr);
-            metricsDAO.upsert(device.getId(),metrics);
+            metricsDAO.updateValues(metrics);
         }
     }
 
