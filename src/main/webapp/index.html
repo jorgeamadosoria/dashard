@@ -8,28 +8,30 @@
 <link href="dist/css/dashard.css" rel="stylesheet">
 </head>
 <body>
+	<div id="page-wrapper">
+		<div class="row">
+			<a href="upsert.html"><i class=""></i>Add Device</a>
+			<table id="devices">
+				<thead>
+					<th>Name</th>
+					<th>Description</th>
+					<th>Access Id</th>
+					<th>Actions</th>
+					<tr id="deviceRow" class="hidden">
+						<td id="name"></td>
+						<td id="description"></td>
+						<td id="accessId"></td>
+						<td><a href="view.html?id="><i class=""></i>View</a>&nbsp; <a
+							href="upsert.html?id="><i class=""></i>Update</a>&nbsp; <a
+							href="devices/delete?id="><i class=""></i>Delete</a>&nbsp;</td>
+					</tr>
+				</thead>
+				<tbody id="devicesList">
 
-<a
-					href="upsert.html"><i class=""></i>Add Device</a>
-	<table id="devices">
-		<thead>
-			<th>Name</th>
-			<th>Description</th>
-			<th>Access Id</th>
-			<th>Actions</th>
-			<tr id="deviceRow" class="hidden">
-				<td id="name"></td>
-				<td id="description"></td>
-				<td id="accessId"></td>
-				<td><a href="view.html?id="><i class=""></i>View</a>&nbsp; <a
-					href="upsert.html?id="><i class=""></i>Update</a>&nbsp; <a
-					href="devices/delete?id="><i class=""></i>Delete</a>&nbsp;</td>
-			</tr>
-		</thead>
-		<tbody id="devicesList">
-
-		</tbody>
-	</table>
+				</tbody>
+			</table>
+		</div>
+	</div>
 
 
 	<script src="dist/js/jquery.min.js"></script>

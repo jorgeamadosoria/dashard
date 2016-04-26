@@ -1,8 +1,6 @@
 var addSwitchTemplate = '<div>Id:<input id="id" readonly >Name:<input id="name"> Description:<input id="description"> Pin:<input id="pin"> Parent Id:<input id="parentId"><button class="remove_field">Remove</button></div>';
-var viewSwitchTemplate = '<div class="switch" >Id:<span id="id"></span>Name:<span id="name"></span></br>Description:<span id="description"></span></br>Pin:<span id="pin"></span></br>Parent Id:<span id="parentId"></span></br>State:<span id="state"></span></br><button class="switch_toggle">Toggle</button></br></div>';
-
 var addMetricsTemplate = '<div><input id="id" type="hidden" >Code:<input id="code"> Name:<input id="name"><button class="remove_field">Remove</button></div>';
-var viewMetricsTemplate = '<div>Code:<span id="code"></span></br>Name:<span id="name"></span></br>Value:<span id="value"></span></br>Date:<span id="date"></span></div>';
+
 $.extend({
 	getUrlVars : function() {
 		var vars = [], hash;
@@ -181,28 +179,39 @@ function pollMetrics() {
 }
 
 function configDeviceView(data) {
+
 	$("#name").text(data.name);
 	$("#description").text(data.description);
+	$("#accessId").last().text(data.accessId);
 	for (var x = 0; x < data.metrics.length; x++) {
+		viewMetricsTemplate = $("#metrics-template").clone();
+		$(viewMetricsTemplate).attr("id", "");
+		$(viewMetricsTemplate).removeClass("hidden");
 		$("#metrics_wrapper").append(viewMetricsTemplate);
-		$("#metrics_wrapper div").last().attr("id", data.metrics[x].id);
-		$("#metrics_wrapper #code").last().text(data.metrics[x].code);
-		$("#metrics_wrapper #name").last().text(data.metrics[x].name);
-		$("#metrics_wrapper #value").last().text(data.metrics[x].value);
-		$("#metrics_wrapper #date").last().text(new Date(data.metrics[x].date));
+		$(viewMetricsTemplate).attr("id", data.metrics[x].id);
+		$(viewMetricsTemplate).find("#name").text(data.metrics[x].name);
+		$(viewMetricsTemplate).find("#value").text(data.metrics[x].value);
+		$(viewMetricsTemplate).find("#date").text(
+				new Date(data.metrics[x].date));
 	}
 	for (var x = 0; x < data.switches.length; x++) {
+		viewSwitchTemplate = $("#switches-template").clone();
+		$(viewSwitchTemplate).attr("id", "");
+		$(viewSwitchTemplate).removeClass("hidden");
 		$("#switches_wrapper").append(viewSwitchTemplate);
-		$("#switches_wrapper div.switch").last()
+		$(viewSwitchTemplate).find("div.switch")
 				.attr('id', data.switches[x].id);
-		$("#switches_wrapper #name").last().text(data.switches[x].name);
-		$("#switches_wrapper #id").last().text(data.switches[x].id);
-		$("#switches_wrapper #description").last().text(
+		$(viewSwitchTemplate).find("#name").text(data.switches[x].name);
+		$(viewSwitchTemplate).find("#id").text(data.switches[x].id);
+		$(viewSwitchTemplate).find("#description").text(
 				data.switches[x].description);
-		$("#switches_wrapper #pin").last().text(data.switches[x].pin);
-		$("#switches_wrapper #parentId").last().text(data.switches[x].parentId);
-		$("#switches_wrapper #state").last().text(data.switches[x].state);
-		$("#switches_wrapper div.switch button").last().attr("data-id",
+		$(viewSwitchTemplate).find("#pin").last().text(data.switches[x].pin);
+		$(viewSwitchTemplate).find("#parentId").text(data.switches[x].parentId);
+		
+		$(viewSwitchTemplate).find("#state").removeAttr("checked");
+		if (data.switches[x].state == 1)
+			$(viewSwitchTemplate).find("#state").attr("checked", "checked");
+		$(viewSwitchTemplate).find("div.switch button").attr("data-id",
 				data.switches[x].id);
 		$("#switches_wrapper div.switch button").last().on("click",
 				function(e) {
