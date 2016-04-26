@@ -82,23 +82,7 @@ function upsertSwitchesAddButton(x) {
 			.click(
 					function(e) { // on add input button click
 						e.preventDefault();
-						$(wrapper)
-								.append(
-										'Id:<input readonly name="switches['
-												+ x
-												+ '].id" value="0">'
-												+ 'Name:<input name="switches['
-												+ x
-												+ '].name"> Description:<input name="switches['
-												+ x
-												+ '].description"> Pin:<input name="switches['
-												+ x
-												+ '].pin"> Parent Id:<input name="switches['
-												+ x
-												+ '].parentId" value="0"><button class="remove_field">Remove</button></div>'); // add
-						// input
-						// box
-						x++; // text box increment
+						addSwitch(x,{id:0,parentId:0});
 					});
 
 	$(wrapper).on("click", ".remove_field", function(e) { // user click on
@@ -108,6 +92,22 @@ function upsertSwitchesAddButton(x) {
 	})
 };
 // ------------------------------------------------
+function addSwitch(x, switchObj) {
+	$("#switches_wrapper")
+			.append(
+					'<div>Id:<input id="id" readonly >Name:<input id="name"> Description:<input id="description"> Pin:<input id="pin"> Parent Id:<input id="parentId"><button class="remove_field">Remove</button></div>');
+	$('#switches_wrapper #id').last().val(switchObj.id).attr("name",
+			"switches[" + x + "].id");
+	$('#switches_wrapper #name').last().val(switchObj.name).attr("name",
+			"switches[" + x + "].name");
+	$('#switches_wrapper #description').last().val(switchObj.description).attr(
+			"name", "switches[" + x + "].description");
+	$('#switches_wrapper #pin').last().val(switchObj.pin).attr("name",
+			"switches[" + x + "].pin");
+	$('#switches_wrapper #parentId').last().val(switchObj.parentId).attr(
+			"name", "switches[" + x + "].parentId");
+}
+
 function configDeviceUpsert(data) {
 	$("#id").val(data.id);
 	$("#name").val(data.name);
@@ -116,69 +116,18 @@ function configDeviceUpsert(data) {
 	for (; x < data.metrics.length; x++) {
 		$("#metrics_wrapper")
 				.append(
-						'<div><input id="metrics'
-								+ x
-								+ 'id" name="metrics['
-								+ x
-								+ '].id" type="hidden" value="'
-								+ data.metrics[x].id
-								+ '">Code:<input id="metrics'
-								+ x
-								+ 'code" name="metrics['
-								+ x
-								+ '].code" value="'
-								+ data.metrics[x].code
-								+ '"> Name:<input id="metrics'
-								+ x
-								+ 'name" name="metrics['
-								+ x
-								+ '].name" value="'
-								+ data.metrics[x].name
-								+ '"><button class="remove_field">Remove</button></div>');
-		$('#metrics_wrapper #metrics' + x + 'code').val(data.metrics[x].code);
-		$('metrics_wrapper #metrics' + x + 'name').val(data.metrics[x].name);
+						'<div><input id="id" type="hidden" >Code:<input id="code"> Name:<input id="name"><button class="remove_field">Remove</button></div>');
+		$('#metrics_wrapper #id').last().val(data.metrics[x].id).attr("name",
+				"metrics[" + x + "].id");
+		$('#metrics_wrapper #code').last().val(data.metrics[x].code).attr(
+				"name", "metrics[" + x + "].code");
+		$('metrics_wrapper #name').last().val(data.metrics[x].name).attr(
+				"name", "metrics[" + x + "].name");
 	}
 	upsertMetricsAddButton(x);
 	x = 0;
 	for (; x < data.switches.length; x++) {
-		$("#switches_wrapper")
-				.append(
-						'<div>Id:<input id="switches'
-								+ x
-								+ 'id" name="switches['
-								+ x
-								+ '].id" readonly value="'
-								+ data.switches[x].id
-								+ '">Name:<input id="switches'
-								+ x
-								+ 'name" name="switches['
-								+ x
-								+ '].name" value="'
-								+ data.switches[x].name
-								+ '"> Description:<input id="switches'
-								+ x
-								+ 'description" name="switches['
-								+ x
-								+ '].description" value="'
-								+ data.switches[x].description
-								+ '"> Pin:<input id="switches'
-								+ x
-								+ 'pin" name="switches['
-								+ x
-								+ '].pin" value="'
-								+ data.switches[x].pin
-								+ '"> Parent Id:<input id="switches'
-								+ x
-								+ 'parentId" name="switches['
-								+ x
-								+ '].parentId" value="'
-								+ data.switches[x].parentId
-								+ '"><button class="remove_field">Remove</button></div>');
-		$('#switches_wrapper #switches' + x + 'name').text(
-				data.switches[x].name);
-		$('#switches_wrapper #switches' + x + 'description').text(
-				data.switches[x].description);
-		$('#switches_wrapper #switches' + x + 'pin').text(data.switches[x].pin);
+		addSwitch(x,data.switches[x]);
 	}
 	upsertSwitchesAddButton(x);
 }
