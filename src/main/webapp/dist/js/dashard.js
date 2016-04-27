@@ -178,6 +178,7 @@ function pollMetrics() {
 	setTimeout(pollMetrics, 1000);
 }
 
+
 function configDeviceView(data) {
 
 	$("#name").text(data.name);
@@ -191,6 +192,8 @@ function configDeviceView(data) {
 		$(viewMetricsTemplate).attr("id", data.metrics[x].id);
 		$(viewMetricsTemplate).find("#name").text(data.metrics[x].name);
 		$(viewMetricsTemplate).find("#value").text(data.metrics[x].value);
+		$(viewMetricsTemplate).find("#state").bootstrapSwitch();
+		//switchToggle($(viewMetricsTemplate).find("#state"));
 		$(viewMetricsTemplate).find("#date").text(
 				new Date(data.metrics[x].date));
 	}
@@ -199,35 +202,31 @@ function configDeviceView(data) {
 		$(viewSwitchTemplate).attr("id", "");
 		$(viewSwitchTemplate).removeClass("hidden");
 		$("#switches_wrapper").append(viewSwitchTemplate);
-		$(viewSwitchTemplate).find("div.switch")
-				.attr('id', data.switches[x].id);
+		$(viewSwitchTemplate).attr('id', data.switches[x].id);
 		$(viewSwitchTemplate).find("#name").text(data.switches[x].name);
 		$(viewSwitchTemplate).find("#id").text(data.switches[x].id);
 		$(viewSwitchTemplate).find("#description").text(
 				data.switches[x].description);
 		$(viewSwitchTemplate).find("#pin").last().text(data.switches[x].pin);
 		$(viewSwitchTemplate).find("#parentId").text(data.switches[x].parentId);
+		$(viewSwitchTemplate).find("#state").prop(
+				"checked", data.switches[x].state == 1);
 		
-		$(viewSwitchTemplate).find("#state").removeAttr("checked");
-		if (data.switches[x].state == 1)
-			$(viewSwitchTemplate).find("#state").attr("checked", "checked");
-		$(viewSwitchTemplate).find("div.switch button").attr("data-id",
-				data.switches[x].id);
-		$("#switches_wrapper div.switch button").last().on("click",
-				function(e) {
-					var id = $(this).data('id');
-					e.preventDefault();
-					$.ajax({
-						url : "data/toggle",
-						data : {
-							"deviceId" : $.getUrlVar('id'),
-							"id" : id
-						},
-						method : "POST",
-						success : updateSwitchState
-					});
+		$(viewSwitchTemplate).find("#switch_toggle").attr("data-id",
+				data.switches[x].id).on("click", function(e) {
+			var id = $(this).data('id');
+			e.preventDefault();
+			$.ajax({
+				url : "data/toggle",
+				data : {
+					"deviceId" : $.getUrlVar('id'),
+					"id" : id
+				},
+				method : "POST",
+				success : updateSwitchState
+			});
 
-				})
+		})
 	}
 
 	pollMetrics();
@@ -235,8 +234,8 @@ function configDeviceView(data) {
 
 function updateSwitchState(data) {
 	for (var x = 0; x < data.length; x++) {
-		$("#switches_wrapper div.switch#" + data[x].id + " #state").text(
-				data[x].state);
+		$("#switches_wrapper").find('div#' + data[x].id + " #state").prop(
+				"checked", data[x].state == 1);
 	}
 }
 

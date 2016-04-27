@@ -48,7 +48,7 @@
 	<script src="dist/js/bootstrap.min.js"></script>
 	<script src="dist/js/highlight.js"></script>
 	<script src="dist/js/jquery-ui.min.js"></script>
-	<script src="dist/js/bootstrap-switch.min.js"></script>
+ 	<script src="dist/js/bootstrap-switch.min.js"></script> 
 	<script src="dist/js/main.js"></script>
 	<script src="dist/js/dashard.js"></script>
 	<script>
@@ -74,13 +74,13 @@
 			</div>
 		</div>
 	</div>
-
-	<div id="switches-template" class="switch">
+		
+	<div id="switches-template" class="hidden">
 		Id: <span id="id"></span>Name: <span id="name"></span> </br>Description: <span
 			id="description"></span> </br>Pin: <span id="pin"></span> </br>Parent Id: <span
-			id="parentId"></span> </br> <input id="state" type="checkbox" name="state">
+			id="parentId"></span> </br> <input id="state" type="checkbox" name="state" checked >
 		</br>
-		<button class="switch_toggle">Toggle</button>
+		<button id="switch_toggle">Toggle</button>
 	</div>
 
 </body>
