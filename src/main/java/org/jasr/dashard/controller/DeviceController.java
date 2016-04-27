@@ -43,13 +43,6 @@ public class DeviceController {
         }
     }
 
-    @RequestMapping(value = "/{accessId}/switches", method = RequestMethod.GET)
-    public String pinString(@PathVariable String accessId) {
-
-        Device device = deviceDAO.get(accessId);
-        return commUtils.generatePinString(device.getSwitches());
-    }
-
     @RequestMapping(value = "/delete", method = RequestMethod.GET)
     public String deleteDevice(Long id) throws IOException {
         deviceDAO.delete(id);

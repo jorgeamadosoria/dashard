@@ -28,6 +28,20 @@
 	<script>
 		$(document).ready(initUpsert);
 	</script>
+
+	<div id="switch-template" class="hidden">
+		Id:<input id="id" readonly>Name:<input id="name">
+		Description:<input id="description"> Pin:<input id="pin">
+		Parent Id:<input id="parentId">
+		<button class="remove_field">Remove</button>
+	</div>
+
+	<div id="metrics-template" class="hidden">
+		<input id="id" type="hidden">Code:<input id="code">
+		Name:<input id="name">
+		<button class="remove_field">Remove</button>
+	</div>
+
 </body>
 
 </html>

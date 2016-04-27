@@ -3,11 +3,9 @@
 <head>
 <title>Dashboard for Arduino</title>
 <link href="dist/css/bootstrap.min.css" rel="stylesheet">
-<link href="dist/css/bootstrap-switch.min.css" rel="stylesheet">
 <link href="dist/css/jquery-ui.min.css" rel="stylesheet">
 <link href="dist/css/font-awesome.min.css" rel="stylesheet">
-<link href="dist/css/highlight.css" rel="stylesheet">
-<link href="dist/css/main.css" rel="stylesheet">
+<link href="dist/css/switch.css" rel="stylesheet">
 <link href="dist/css/dashard.css" rel="stylesheet">
 </head>
 <body>
@@ -40,16 +38,30 @@
 			<div class="col-lg-12">Switches</div>
 		</div>
 		<div class="row">
-			<div id="switches_wrapper" class="col-lg-12"></div>
+			<div class="col-xs-2">
+				<span>Id</span>
+			</div>
+			<div class="col-xs-3">
+				<span>Name</span>
+			</div>
+			<div class="col-xs-1">
+				<span>Pin</span>
+			</div>
+			<div class="col-xs-3">
+				<span>Description</span>
+			</div>
+			<div class="col-xs-3">
+				<span>Switch</span>
+			</div>
+		</div>
+		<div class="row" >
+			<div class="col-lg-12" id="switches_wrapper"></div>
 		</div>
 	</div>
 
 	<script src="dist/js/jquery.min.js"></script>
 	<script src="dist/js/bootstrap.min.js"></script>
-	<script src="dist/js/highlight.js"></script>
 	<script src="dist/js/jquery-ui.min.js"></script>
-	<script src="dist/js/bootstrap-switch.min.js"></script>
-	<script src="dist/js/main.js"></script>
 	<script src="dist/js/dashard.js"></script>
 	<script>
 		initView();
@@ -60,6 +72,7 @@
 				<div class="row">
 					<div class="col-xs-3">
 						<span id="name"></span>
+						<span id="code"></span>
 					</div>
 					<div class="col-xs-9 text-right">
 						<div class="huge">
@@ -75,12 +88,29 @@
 		</div>
 	</div>
 
-	<div id="switches-template" class="switch">
-		Id: <span id="id"></span>Name: <span id="name"></span> </br>Description: <span
-			id="description"></span> </br>Pin: <span id="pin"></span> </br>Parent Id: <span
-			id="parentId"></span> </br> <input id="state" type="checkbox" name="state">
-		</br>
-		<button class="switch_toggle">Toggle</button>
+
+	<div id="switches-template" class="row hidden">
+		<div class="col-xs-2">
+			<span id="id"></span>
+		</div>
+		<div class="col-xs-3">
+			<span id="name"></span>
+		</div>
+		<div class="col-xs-1">
+			<span id="pin">Pin</span>
+		</div>
+		<div class="col-xs-3">
+			<span id="description">Description</span>
+		</div>
+		<div class="col-xs-3">
+			<div class="onoffswitch">
+				<input type="checkbox" name="state" class="onoffswitch-checkbox"
+					id="state"> <label class="onoffswitch-label"
+					for="myonoffswitch"> <span class="onoffswitch-inner"></span>
+					<span class="onoffswitch-switch"></span>
+				</label>
+			</div>
+		</div>
 	</div>
 
 </body>

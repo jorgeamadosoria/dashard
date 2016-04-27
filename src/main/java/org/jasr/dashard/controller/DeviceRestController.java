@@ -13,6 +13,7 @@ import org.jasr.dashard.domain.Switch;
 import org.jasr.dashard.utils.CommUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -60,6 +61,13 @@ public class DeviceRestController {
     public List<Device> list() {
         return deviceDAO.list();
 
+    }
+    
+    @RequestMapping(value = "/{accessId}/switches", method = RequestMethod.GET)
+    public String pinString(@PathVariable String accessId) {
+
+        Device device = deviceDAO.get(accessId);
+        return commUtils.generatePinString(device.getSwitches());
     }
 
     @RequestMapping(value = "/toggle", method = RequestMethod.POST)

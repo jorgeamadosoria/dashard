@@ -1,6 +1,3 @@
-var addSwitchTemplate = '<div>Id:<input id="id" readonly >Name:<input id="name"> Description:<input id="description"> Pin:<input id="pin"> Parent Id:<input id="parentId"><button class="remove_field">Remove</button></div>';
-var addMetricsTemplate = '<div><input id="id" type="hidden" >Code:<input id="code"> Name:<input id="name"><button class="remove_field">Remove</button></div>';
-
 $.extend({
 	getUrlVars : function() {
 		var vars = [], hash;
@@ -116,26 +113,33 @@ function upsertSwitchesAddButton(x) {
 };
 // ------------------------------------------------
 function addSwitch(x, switchObj) {
+	var addSwitchTemplate = $('#switch-template').clone();
+	
 	$("#switches_wrapper").append(addSwitchTemplate);
-	$('#switches_wrapper #id').last().val(switchObj.id).attr("name",
+	$(addSwitchTemplate).attr("id", switchObj.id);
+	$(addSwitchTemplate).removeClass("hidden");
+	$(addSwitchTemplate).find('#id').val(switchObj.id).attr("name",
 			"switches[" + x + "].id");
-	$('#switches_wrapper #name').last().val(switchObj.name).attr("name",
+	$(addSwitchTemplate).find('#name').val(switchObj.name).attr("name",
 			"switches[" + x + "].name");
-	$('#switches_wrapper #description').last().val(switchObj.description).attr(
+	$(addSwitchTemplate).find('#description').val(switchObj.description).attr(
 			"name", "switches[" + x + "].description");
-	$('#switches_wrapper #pin').last().val(switchObj.pin).attr("name",
+	$(addSwitchTemplate).find('#pin').val(switchObj.pin).attr("name",
 			"switches[" + x + "].pin");
-	$('#switches_wrapper #parentId').last().val(switchObj.parentId).attr(
+	$(addSwitchTemplate).find('#parentId').val(switchObj.parentId).attr(
 			"name", "switches[" + x + "].parentId");
 }
 
 function addMetrics(x, metricsObj) {
+	var addMetricsTemplate = $('#metrics-template').clone();
 	$("#metrics_wrapper").append(addMetricsTemplate);
-	$('#metrics_wrapper #id').last().val(metricsObj.id).attr("name",
+	$(addMetricsTemplate).attr("id", metricsObj.id);
+	$(addMetricsTemplate).removeClass("hidden");
+	$(addMetricsTemplate).find('#id').val(metricsObj.id).attr("name",
 			"metrics[" + x + "].id");
-	$('#metrics_wrapper #code').last().val(metricsObj.code).attr("name",
+	$(addMetricsTemplate).find('#code').val(metricsObj.code).attr("name",
 			"metrics[" + x + "].code");
-	$('#metrics_wrapper #name').last().val(metricsObj.name).attr("name",
+	$(addMetricsTemplate).find('#name').val(metricsObj.name).attr("name",
 			"metrics[" + x + "].name");
 }
 
@@ -178,6 +182,7 @@ function pollMetrics() {
 	setTimeout(pollMetrics, 1000);
 }
 
+
 function configDeviceView(data) {
 
 	$("#name").text(data.name);
@@ -196,38 +201,33 @@ function configDeviceView(data) {
 	}
 	for (var x = 0; x < data.switches.length; x++) {
 		viewSwitchTemplate = $("#switches-template").clone();
-		$(viewSwitchTemplate).attr("id", "");
+		$(viewSwitchTemplate).attr("id", data.switches[x].id);
 		$(viewSwitchTemplate).removeClass("hidden");
 		$("#switches_wrapper").append(viewSwitchTemplate);
-		$(viewSwitchTemplate).find("div.switch")
-				.attr('id', data.switches[x].id);
+		$(viewSwitchTemplate).attr('id', data.switches[x].id);
 		$(viewSwitchTemplate).find("#name").text(data.switches[x].name);
 		$(viewSwitchTemplate).find("#id").text(data.switches[x].id);
 		$(viewSwitchTemplate).find("#description").text(
 				data.switches[x].description);
 		$(viewSwitchTemplate).find("#pin").last().text(data.switches[x].pin);
-		$(viewSwitchTemplate).find("#parentId").text(data.switches[x].parentId);
-		
-		$(viewSwitchTemplate).find("#state").removeAttr("checked");
-		if (data.switches[x].state == 1)
-			$(viewSwitchTemplate).find("#state").attr("checked", "checked");
-		$(viewSwitchTemplate).find("div.switch button").attr("data-id",
-				data.switches[x].id);
-		$("#switches_wrapper div.switch button").last().on("click",
-				function(e) {
-					var id = $(this).data('id');
-					e.preventDefault();
-					$.ajax({
-						url : "data/toggle",
-						data : {
-							"deviceId" : $.getUrlVar('id'),
-							"id" : id
-						},
-						method : "POST",
-						success : updateSwitchState
-					});
+	//	$(viewSwitchTemplate).find("#parentId").text(data.switches[x].parentId);
+		$(viewSwitchTemplate).find("#state").prop(
+				"checked", data.switches[x].state == 1);
+		$(viewSwitchTemplate).find(".onoffswitch").data("id",
+				data.switches[x].id).on("click", function(e) {
+			var id = $(this).data('id');
+			e.preventDefault();
+			$.ajax({
+				url : "data/toggle",
+				data : {
+					"deviceId" : $.getUrlVar('id'),
+					"id" : id
+				},
+				method : "POST",
+				success : updateSwitchState
+			});
 
-				})
+		})
 	}
 
 	pollMetrics();
@@ -235,8 +235,8 @@ function configDeviceView(data) {
 
 function updateSwitchState(data) {
 	for (var x = 0; x < data.length; x++) {
-		$("#switches_wrapper div.switch#" + data[x].id + " #state").text(
-				data[x].state);
+		$("#switches_wrapper").find('div#' + data[x].id + " #state").prop(
+				"checked", data[x].state == 1);
 	}
 }
 
