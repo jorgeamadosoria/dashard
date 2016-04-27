@@ -196,6 +196,8 @@ function configDeviceView(data) {
 		$(viewMetricsTemplate).attr("id", data.metrics[x].id);
 		$(viewMetricsTemplate).find("#name").text(data.metrics[x].name);
 		$(viewMetricsTemplate).find("#value").text(data.metrics[x].value);
+		$(viewMetricsTemplate).find("#state").bootstrapSwitch();
+		//switchToggle($(viewMetricsTemplate).find("#state"));
 		$(viewMetricsTemplate).find("#date").text(
 				new Date(data.metrics[x].date));
 	}
@@ -210,10 +212,18 @@ function configDeviceView(data) {
 		$(viewSwitchTemplate).find("#description").text(
 				data.switches[x].description);
 		$(viewSwitchTemplate).find("#pin").last().text(data.switches[x].pin);
+<<<<<<< HEAD
 	//	$(viewSwitchTemplate).find("#parentId").text(data.switches[x].parentId);
 		$(viewSwitchTemplate).find("#state").prop(
 				"checked", data.switches[x].state == 1);
 		$(viewSwitchTemplate).find(".onoffswitch").data("id",
+=======
+		$(viewSwitchTemplate).find("#parentId").text(data.switches[x].parentId);
+		$(viewSwitchTemplate).find("#state").prop(
+				"checked", data.switches[x].state == 1);
+		
+		$(viewSwitchTemplate).find("#switch_toggle").attr("data-id",
+>>>>>>> branch 'master' of https://github.com/jorgeamadosoria/dashard.git
 				data.switches[x].id).on("click", function(e) {
 			var id = $(this).data('id');
 			e.preventDefault();
