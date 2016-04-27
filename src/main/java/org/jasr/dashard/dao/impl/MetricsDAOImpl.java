@@ -48,9 +48,9 @@ public class MetricsDAOImpl implements MetricsDAO {
     public void upsert(Long deviceId, Metrics entity) {
         entity.setDeviceId(deviceId);
         if (entity.getId() == null || entity.getId() == 0)
-            template.update(env.getProperty("insert.metrics"), entity.getDeviceId(), entity.getName(), entity.getCode());
+            template.update(env.getProperty("insert.metrics"), entity.getDeviceId(), entity.getName(), entity.getCode(), entity.getType());
         else
-            template.update(env.getProperty("update.metrics"), entity.getName(), entity.getCode(), entity.getId());
+            template.update(env.getProperty("update.metrics"), entity.getName(), entity.getCode(), entity.getType(), entity.getId());
     }
 
     public void delete(Long id) {

@@ -9,10 +9,19 @@ public class Metrics extends BaseEntity {
     private String code;
     private String name;
     private String value;
-    private Date date;
+    private Date   date;
+    private String type;
     
     
-    
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
     public String getCode() {
         return code;
     }

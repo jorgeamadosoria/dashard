@@ -46,7 +46,8 @@ CREATE TABLE public.metrics
   name text,
   value text,
   date timestamp without time zone,
-  code text
+  code text,
+  type text
 )
 WITH (
   OIDS=FALSE

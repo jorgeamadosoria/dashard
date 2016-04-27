@@ -139,6 +139,8 @@ function addMetrics(x, metricsObj) {
 			"metrics[" + x + "].id");
 	$(addMetricsTemplate).find('#code').val(metricsObj.code).attr("name",
 			"metrics[" + x + "].code");
+	$(addMetricsTemplate).find('#type').val(metricsObj.type).attr("name",
+			"metrics[" + x + "].type");
 	$(addMetricsTemplate).find('#name').val(metricsObj.name).attr("name",
 			"metrics[" + x + "].name");
 }
@@ -195,8 +197,9 @@ function configDeviceView(data) {
 		$("#metrics_wrapper").append(viewMetricsTemplate);
 		$(viewMetricsTemplate).attr("id", data.metrics[x].id);
 		$(viewMetricsTemplate).find("#name").text(data.metrics[x].name);
+		$(viewMetricsTemplate).find("#type").text(data.metrics[x].type);
+		
 		$(viewMetricsTemplate).find("#value").text(data.metrics[x].value);
-		$(viewMetricsTemplate).find("#state").bootstrapSwitch();
 		//switchToggle($(viewMetricsTemplate).find("#state"));
 		$(viewMetricsTemplate).find("#date").text(
 				new Date(data.metrics[x].date));
