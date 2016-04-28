@@ -62,7 +62,7 @@ function upsertMetricsAddButton(x) {
 		})
 	});
 
-	$(wrapper).on("click", ".remove_field", function(e) { // user click on
+	$(wrapper).on("click", "button.remove_field", function(e) { // user click on
 		// remove text
 		e.preventDefault();
 		var id = $(this).parent('div').find("#id").val();
@@ -93,7 +93,7 @@ function upsertSwitchesAddButton(x) {
 		});
 	});
 
-	$(wrapper).on("click", ".remove_field", function(e) { // user click on
+	$(wrapper).on("click", "button.remove_field", function(e) { // user click on
 		// remove text
 		e.preventDefault();
 		var id = $(this).parent('div').children().filter("#id").val();
@@ -139,8 +139,9 @@ function addMetrics(x, metricsObj) {
 			"metrics[" + x + "].id");
 	$(addMetricsTemplate).find('#code').val(metricsObj.code).attr("name",
 			"metrics[" + x + "].code");
-	$(addMetricsTemplate).find('#type').val(metricsObj.type).attr("name",
-			"metrics[" + x + "].type");
+	$(addMetricsTemplate).find('#type').attr("name",
+			"metrics[" + x + "].type").data("icon",metricsObj.type).iconpicker();
+	//.val(metricsObj.type).attr("name","metrics[" + x + "].type");
 	$(addMetricsTemplate).find('#name').val(metricsObj.name).attr("name",
 			"metrics[" + x + "].name");
 }
@@ -176,7 +177,7 @@ function pollMetrics() {
 				$("#metrics_wrapper div#" + data[x].id + " #value").text(
 						data[x].value);
 				$("#metrics_wrapper div#" + data[x].id + " #date").text(
-						new Date(data[x].date));
+						data[x].dateString);
 			}
 		}
 	});
@@ -197,12 +198,12 @@ function configDeviceView(data) {
 		$("#metrics_wrapper").append(viewMetricsTemplate);
 		$(viewMetricsTemplate).attr("id", data.metrics[x].id);
 		$(viewMetricsTemplate).find("#name").text(data.metrics[x].name);
-		$(viewMetricsTemplate).find("#type").text(data.metrics[x].type);
+		$(viewMetricsTemplate).find("#type").addClass("wi "+data.metrics[x].type);
 		
 		$(viewMetricsTemplate).find("#value").text(data.metrics[x].value);
 		//switchToggle($(viewMetricsTemplate).find("#state"));
 		$(viewMetricsTemplate).find("#date").text(
-				new Date(data.metrics[x].date));
+				data.metrics[x].dateString);
 	}
 	for (var x = 0; x < data.switches.length; x++) {
 		viewSwitchTemplate = $("#switches-template").clone();

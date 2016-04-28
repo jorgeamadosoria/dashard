@@ -3,6 +3,8 @@
 <head>
 <title>Dashboard for Arduino</title>
 <link href="dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="dist/css/bootstrap-iconpicker.min.css" rel="stylesheet">
+<link href="dist/css/weather-icons.min.css" rel="stylesheet">
 <link href="dist/css/jquery-ui.min.css" rel="stylesheet">
 <link href="dist/css/font-awesome.min.css" rel="stylesheet">
 <link href="dist/css/switch.css" rel="stylesheet">
@@ -61,6 +63,8 @@
 
 	<script src="dist/js/jquery.min.js"></script>
 	<script src="dist/js/bootstrap.min.js"></script>
+	<script src="dist/js/bootstrap-iconpicker.min.js"></script>
+	<script src="dist/js/iconset-weathericon-1.2.0.min.js"></script>
 	<script src="dist/js/jquery-ui.min.js"></script>
 	<script src="dist/js/dashard.js"></script>
 	<script>
@@ -72,7 +76,7 @@
 				<div class="row">
 					<div class="col-xs-3">
 						<span id="name"></span>
-						<span id="type"></span>
+						<i id="type" class="huge"></i>
 					</div>
 					<div class="col-xs-9 text-right">
 						<div class="huge">

@@ -52,7 +52,7 @@ public class DeviceController {
 
     @RequestMapping(value = "/upsert", method = RequestMethod.POST)
     public String upsert(Device device) throws IOException {
-        device.setAccessId(commUtils.generateAccessId());
+        
         deviceDAO.upsert(device);
         return "redirect:/index.html";
     }

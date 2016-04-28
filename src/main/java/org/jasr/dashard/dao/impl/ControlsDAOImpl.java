@@ -34,6 +34,7 @@ public class ControlsDAOImpl implements ControlsDAO {
 
     public void upsert(Long deviceId, List<Switch> entities) {
         for (Switch s : entities) {
+            if (s.getName() != null)
             upsert(deviceId, s);
         }
     }

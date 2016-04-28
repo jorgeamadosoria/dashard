@@ -41,6 +41,7 @@ public class MetricsDAOImpl implements MetricsDAO {
 
     public void upsert(Long deviceId, List<Metrics> entities) {
         for (Metrics metrics : entities) {
+            if (metrics.getCode() != null)
             upsert(deviceId,metrics);
         }
     }

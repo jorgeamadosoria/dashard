@@ -9,6 +9,7 @@ import org.jasr.dashard.dao.DeviceDAO;
 import org.jasr.dashard.dao.MetricsDAO;
 import org.jasr.dashard.domain.Device;
 import org.jasr.dashard.domain.Metrics;
+import org.jasr.dashard.utils.CommUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
@@ -28,7 +29,8 @@ public class DeviceDAOImpl implements DeviceDAO {
 
     @Autowired
     private ControlsDAO  controlsDAO;
-
+    @Autowired
+    private CommUtils  commUtils;
     @Autowired
     private MetricsDAO   metricsDAO;
 
@@ -40,6 +42,7 @@ public class DeviceDAOImpl implements DeviceDAO {
     public void upsert(Device entity) {
         Device tempEntity = entity;
         if (entity.getId() == null || entity.getId() == 0) {
+            entity.setAccessId(commUtils.generateAccessId());
             template.update(env.getProperty("insert.device"), entity.getName(), entity.getDescription(), entity.getAccessId());
             tempEntity = get(entity.getAccessId());
         }

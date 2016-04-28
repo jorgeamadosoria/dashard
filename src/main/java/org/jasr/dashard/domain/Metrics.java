@@ -1,5 +1,6 @@
 package org.jasr.dashard.domain;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Metrics extends BaseEntity {
@@ -12,6 +13,11 @@ public class Metrics extends BaseEntity {
     private Date   date;
     private String type;
     
+    private SimpleDateFormat format = new SimpleDateFormat("MM/dd/y kk:mm:ss");
+    
+    public String getDateString(){
+        return format.format(date);
+    }
     
 
     public String getType() {
