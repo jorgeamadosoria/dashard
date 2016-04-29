@@ -2,19 +2,29 @@ package org.jasr.dashard.domain;
 
 public class Switch extends BaseEntity {
 
-    private Long   id;
-    private String name;
-    private String description;
-    private int state;
-    private int    pin;
-    private Long   deviceId;
-    private Long   parentId;
+    private Long    id;
+    private String  name;
+    private String  description;
+    private int     state;
+    private int     pin;
+    private Long    deviceId;
+    private Long    parentId;
 
-    public Switch(){
+    private boolean enabled;
+
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
+    }
+
+    public Switch() {
         this.id = 0L;
         this.parentId = 0L;
     }
-    
+
     public Long getId() {
         return id;
     }
@@ -38,7 +48,6 @@ public class Switch extends BaseEntity {
     public void setDescription(String description) {
         this.description = description;
     }
-
 
     public int getState() {
         return state;

@@ -51,7 +51,7 @@ public class MetricsDAOImpl implements MetricsDAO {
         if (entity.getId() == null || entity.getId() == 0)
             template.update(env.getProperty("insert.metrics"), entity.getDeviceId(), entity.getName(), entity.getCode(), entity.getType());
         else
-            template.update(env.getProperty("update.metrics"), entity.getName(), entity.getCode(), entity.getType(), entity.getId());
+            template.update(env.getProperty("update.metrics"), entity.getName(), entity.getCode(), entity.getType(), entity.isEnabled(),entity.getId());
     }
 
     public void delete(Long id) {

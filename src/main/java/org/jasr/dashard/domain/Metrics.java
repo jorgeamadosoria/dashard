@@ -12,7 +12,29 @@ public class Metrics extends BaseEntity {
     private String value;
     private Date   date;
     private String type;
+    private boolean enabled;
     
+    
+    
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
+    }
+
+
+    public SimpleDateFormat getFormat() {
+        return format;
+    }
+
+
+    public void setFormat(SimpleDateFormat format) {
+        this.format = format;
+    }
+
     private SimpleDateFormat format = new SimpleDateFormat("MM/dd/y kk:mm:ss");
     
     public String getDateString(){

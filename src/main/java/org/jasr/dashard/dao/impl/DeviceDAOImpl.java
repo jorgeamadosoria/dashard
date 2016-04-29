@@ -47,7 +47,7 @@ public class DeviceDAOImpl implements DeviceDAO {
             tempEntity = get(entity.getAccessId());
         }
         else {
-            template.update(env.getProperty("update.device"), entity.getName(), entity.getDescription(), entity.getId());
+            template.update(env.getProperty("update.device"), entity.getName(), entity.getDescription(), entity.isEnabled(),entity.getId());
             tempEntity = entity;
         }
 

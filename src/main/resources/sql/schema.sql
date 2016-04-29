@@ -30,7 +30,8 @@ CREATE TABLE public.devices
   id integer NOT NULL DEFAULT nextval('devices_id_seq'::regclass),
   name text,
   description text,
-  access_id text
+  access_id text,
+  enabled boolean DEFAULT true
 )
 WITH (
   OIDS=FALSE
@@ -47,7 +48,8 @@ CREATE TABLE public.metrics
   value text,
   date timestamp without time zone,
   code text,
-  type text
+  type text,
+  enabled boolean DEFAULT true
 )
 WITH (
   OIDS=FALSE
@@ -63,7 +65,8 @@ CREATE TABLE public.switches
   pin integer,
   device_id integer,
   parent_id integer,
-  state integer
+  state integer,
+  enabled boolean DEFAULT true
 )
 WITH (
   OIDS=FALSE
