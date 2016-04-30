@@ -11,56 +11,65 @@
 <link href="dist/css/dashard.css" rel="stylesheet">
 </head>
 <body>
-	<div id="page-wrapper">
+	<header>
 		<div class="row">
-			<div class="col-lg-2">Name</div>
-			<div class="col-lg-10">
-				<div id="name"></div>
+			<div class="col-lg-4">
+				<a href="index.html"><img class="logo" src="dist/img/Dashboard.png"></a>
+			</div>
+			<div class="col-lg-8 page-header">
+				<h1>Dashboard for Arduino</h1>
 			</div>
 		</div>
-		<div class="row">
-			<div class="col-lg-2">Description</div>
-			<div class="col-lg-10">
-				<div id="description"></div>
-			</div>
-		</div>
-		<div class="row">
-			<div class="col-lg-2">AccessId</div>
-			<div class="col-lg-10">
-				<div id="accessId"></div>
-			</div>
-		</div>
-		<div class="row">
-			<div class="col-lg-12">Metrics</div>
-		</div>
-		<div class="row">
-			<div id="metrics_wrapper" class="col-lg-12"></div>
-		</div>
-		<div class="row">
-			<div class="col-lg-12">Switches</div>
-		</div>
-		<div class="row">
-			<div class="col-xs-2">
-				<span>Id</span>
-			</div>
-			<div class="col-xs-3">
-				<span>Name</span>
-			</div>
-			<div class="col-xs-1">
-				<span>Pin</span>
-			</div>
-			<div class="col-xs-3">
-				<span>Description</span>
-			</div>
-			<div class="col-xs-3">
-				<span>Switch</span>
-			</div>
-		</div>
-		<div class="row" >
-			<div class="col-lg-12" id="switches_wrapper"></div>
+	</header>
+	<div class="row">
+		<div class="col-lg-12">
+			<hr>
 		</div>
 	</div>
-
+	<div class="row">
+		<div class="col-lg-10 col-lg-offset-1">
+			<div id="page-wrapper">
+				<div class="row">
+					<div class="col-lg-2">Name</div>
+					<div class="col-lg-10">
+						<div id="name"></div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-lg-2">Description</div>
+					<div class="col-lg-10">
+						<div id="description"></div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-lg-2">AccessId</div>
+					<div class="col-lg-10">
+						<div id="accessId"></div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-lg-12">Metrics</div>
+				</div>
+				<div class="row">
+					<div id="metrics_wrapper" class="col-lg-12"></div>
+				</div>
+				<div class="row">
+					<div class="col-lg-12">Switches</div>
+				</div>
+				<div class="row">
+					<div class="col-lg-12" id="switches_wrapper"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<footer>
+		<div class="row">
+			<div class="col-lg-10 col-lg-offset-1 text-center">
+				2016 - <a href="https://github.com/jorgeamadosoria/dashard"><i
+					class="fa fa-github"></i></a>
+			</div>
+		</div>
+	</footer>
 	<script src="dist/js/jquery.min.js"></script>
 	<script src="dist/js/bootstrap.min.js"></script>
 	<script src="dist/js/bootstrap-iconpicker.min.js"></script>
@@ -74,17 +83,16 @@
 		<div class="panel panel-primary">
 			<div class="panel-heading">
 				<div class="row">
-					<div class="col-xs-3">
-						<span id="name"></span>
-						<i id="type" class="huge"></i>
+					<div class="col-lg-3">
+						<span id="name"></span> <i id="type" class="huge"></i>
 					</div>
-					<div class="col-xs-9 text-right">
+					<div class="col-lg-9 text-right">
 						<div class="huge">
 							<span id="value"></span>
 						</div>
 
 					</div>
-					<div class="col-xs-12 small">
+					<div class="col-lg-12 small">
 						<span id="date"></span>
 					</div>
 				</div>
@@ -93,26 +101,19 @@
 	</div>
 
 
-	<div id="switches-template" class="row hidden">
-		<div class="col-xs-2">
-			<span id="id"></span>
-		</div>
-		<div class="col-xs-3">
-			<span id="name"></span>
-		</div>
-		<div class="col-xs-1">
-			<span id="pin">Pin</span>
-		</div>
-		<div class="col-xs-3">
-			<span id="description">Description</span>
-		</div>
-		<div class="col-xs-3">
-			<div class="onoffswitch">
-				<input type="checkbox" name="state" class="onoffswitch-checkbox"
-					id="state"> <label class="onoffswitch-label"
-					for="myonoffswitch"> <span class="onoffswitch-inner"></span>
-					<span class="onoffswitch-switch"></span>
-				</label>
+	<div id="switches-template" class="panel panel-primary col-lg-3 hidden">
+		<div class="row switch-margin">
+			<div class="col-lg-8">
+				<span id="name"></span>
+			</div>
+			<div class="col-lg-3">
+				<div class="onoffswitch">
+					<input type="checkbox" name="state" class="onoffswitch-checkbox"
+						id="state"> <label class="onoffswitch-label"
+						for="myonoffswitch"> <span class="onoffswitch-inner"></span>
+						<span class="onoffswitch-switch"></span>
+					</label>
+				</div>
 			</div>
 		</div>
 	</div>

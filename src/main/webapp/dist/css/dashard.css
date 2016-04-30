@@ -3,3 +3,12 @@
     min-height: 568px;
     background-color: #fff;
 }
+
+.switch-margin {
+	margin-top: 10px;
+	margin-bottom: 10px
+}
+
+.logo {
+	height:10em
+}

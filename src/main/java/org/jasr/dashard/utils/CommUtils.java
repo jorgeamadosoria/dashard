@@ -44,7 +44,7 @@ public class CommUtils {
             String[] split = str.split(",");
             Metrics m = new Metrics();
             m.setDeviceId(deviceId);
-            m.setCode(split[0]);
+            m.setId(Long.valueOf(split[0]));
             m.setDate(new Date());
             m.setValue(split[1]);
             list.add(m);

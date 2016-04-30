@@ -35,13 +35,13 @@ public class MetricsDAOImpl implements MetricsDAO {
     }
 
     public void updateValue(Metrics entity) {
-        template.update(env.getProperty("update.metrics.value"), entity.getValue(), entity.getCode(),
-                entity.getDeviceId());
+        template.update(env.getProperty("update.metrics.value"), entity.getValue(), 
+                entity.getId());
     }
 
     public void upsert(Long deviceId, List<Metrics> entities) {
         for (Metrics metrics : entities) {
-            if (metrics.getCode() != null)
+            if (metrics.getId() != null)
             upsert(deviceId,metrics);
         }
     }
@@ -49,9 +49,9 @@ public class MetricsDAOImpl implements MetricsDAO {
     public void upsert(Long deviceId, Metrics entity) {
         entity.setDeviceId(deviceId);
         if (entity.getId() == null || entity.getId() == 0)
-            template.update(env.getProperty("insert.metrics"), entity.getDeviceId(), entity.getName(), entity.getCode(), entity.getType());
+            template.update(env.getProperty("insert.metrics"), entity.getDeviceId(), entity.getName(), entity.getType());
         else
-            template.update(env.getProperty("update.metrics"), entity.getName(), entity.getCode(), entity.getType(), entity.isEnabled(),entity.getId());
+            template.update(env.getProperty("update.metrics"), entity.getName(),  entity.getType(), entity.isEnabled(),entity.getId());
     }
 
     public void delete(Long id) {

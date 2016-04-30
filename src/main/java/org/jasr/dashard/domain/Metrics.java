@@ -7,7 +7,6 @@ public class Metrics extends BaseEntity {
 
     private Long   id;
     private Long   deviceId;
-    private String code;
     private String name;
     private String value;
     private Date   date;
@@ -26,15 +25,6 @@ public class Metrics extends BaseEntity {
     }
 
 
-    public SimpleDateFormat getFormat() {
-        return format;
-    }
-
-
-    public void setFormat(SimpleDateFormat format) {
-        this.format = format;
-    }
-
     private SimpleDateFormat format = new SimpleDateFormat("MM/dd/y kk:mm:ss");
     
     public String getDateString(){
@@ -48,14 +38,6 @@ public class Metrics extends BaseEntity {
 
     public void setType(String type) {
         this.type = type;
-    }
-
-    public String getCode() {
-        return code;
-    }
-
-    public void setCode(String code) {
-        this.code = code;
     }
 
     public Date getDate() {

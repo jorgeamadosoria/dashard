@@ -65,7 +65,7 @@ function upsertMetricsAddButton(x) {
 	$(wrapper).on("click", "button.remove_field", function(e) { // user click on
 		// remove text
 		e.preventDefault();
-		var id = $(this).parent('div').find("#id").val();
+		var id = $(this).data("id");
 		if (id != 0) {
 			$.ajax({
 				url : "data/metrics/delete",
@@ -77,7 +77,7 @@ function upsertMetricsAddButton(x) {
 				}
 			});
 		}
-		$(this).parent('div').remove();
+		$(this).parents('tr').remove();
 	})
 };
 
@@ -96,7 +96,7 @@ function upsertSwitchesAddButton(x) {
 	$(wrapper).on("click", "button.remove_field", function(e) { // user click on
 		// remove text
 		e.preventDefault();
-		var id = $(this).parent('div').children().filter("#id").val();
+		var id = $(this).data("id");
 		if (id != 0) {
 			$.ajax({
 				url : "data/switches/delete",
@@ -108,7 +108,7 @@ function upsertSwitchesAddButton(x) {
 				}
 			});
 		}
-		$(this).parent('div').remove();
+		$(this).parents('tr').remove();
 	})
 };
 // ------------------------------------------------
@@ -118,9 +118,12 @@ function addSwitch(x, switchObj) {
 	$("#switches_wrapper").append(addSwitchTemplate);
 	$(addSwitchTemplate).attr("id", switchObj.id);
 	$(addSwitchTemplate).removeClass("hidden");
-	$(addSwitchTemplate).find('#enabled').prop("checked",switchObj.enabled);
-	$(addSwitchTemplate).find('#id').val(switchObj.id).attr("name",
+	$(addSwitchTemplate).find('#enabled').attr("name",
+			"switches[" + x + "].enabled").prop("checked",switchObj.enabled);
+	$(addSwitchTemplate).find('input#id').val(switchObj.id).attr("name",
 			"switches[" + x + "].id");
+	$(addSwitchTemplate).find('span#id').text(switchObj.id);
+	$(addSwitchTemplate).find('.remove_field').data("id",switchObj.id);
 	$(addSwitchTemplate).find('#name').val(switchObj.name).attr("name",
 			"switches[" + x + "].name");
 	$(addSwitchTemplate).find('#description').val(switchObj.description).attr(
@@ -136,9 +139,13 @@ function addMetrics(x, metricsObj) {
 	$("#metrics_wrapper").append(addMetricsTemplate);
 	$(addMetricsTemplate).attr("id", metricsObj.id);
 	$(addMetricsTemplate).removeClass("hidden");
-	$(addMetricsTemplate).find('#id').val(metricsObj.id).attr("name",
+	$(addMetricsTemplate).find('input#id').val(metricsObj.id).attr("name",
 			"metrics[" + x + "].id");
-	$(addMetricsTemplate).find('#enabled').prop("checked",metricsObj.enabled);
+	$(addMetricsTemplate).find('span#id').text(metricsObj.id);
+	$(addMetricsTemplate).find('.remove_field').data("id",metricsObj.id);
+	$(addMetricsTemplate).find('#enabled').attr("name",
+			"metrics[" + x + "].enabled").prop("checked",metricsObj.enabled);
+	
 	$(addMetricsTemplate).find('#code').val(metricsObj.code).attr("name",
 			"metrics[" + x + "].code");
 	$(addMetricsTemplate).find('#type').attr("name", "metrics[" + x + "].type")
@@ -215,13 +222,11 @@ function configDeviceView(data) {
 		$(viewSwitchTemplate).attr("id", data.switches[x].id);
 		$(viewSwitchTemplate).removeClass("hidden");
 		$("#switches_wrapper").append(viewSwitchTemplate);
-		$(viewSwitchTemplate).attr('id', data.switches[x].id);
 		$(viewMetricsTemplate).find('#enabled').prop("checked",data.switches[x].enabled);
 		$(viewSwitchTemplate).find("#name").text(data.switches[x].name);
 		$(viewSwitchTemplate).find("#id").text(data.switches[x].id);
 		$(viewSwitchTemplate).find("#description").text(
 				data.switches[x].description);
-		$(viewSwitchTemplate).find("#pin").last().text(data.switches[x].pin);
 		// $(viewSwitchTemplate).find("#parentId").text(data.switches[x].parentId);
 		$(viewSwitchTemplate).find("#state").prop("checked",
 				data.switches[x].state == 1);

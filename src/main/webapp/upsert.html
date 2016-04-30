@@ -12,19 +12,101 @@
 
 </head>
 <body>
+	<header>
+		<div class="row">
+			<div class="col-lg-4">
+				<a href="index.html"><img class="logo" src="dist/img/Dashboard.png"></a>
+			</div>
+			<div class="col-lg-8 page-header">
+				<h1>Dashboard for Arduino</h1>
+			</div>
+		</div>
+	</header>
+	<div class="row">
+		<div class="col-lg-12">
+			<hr>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-lg-10 col-lg-offset-1">
+			<div id="page-wrapper">
+				<form action="devices/upsert" method="POST" class="form-horizontal">
+					<input name="id" id="id" type="hidden">
+					<div class="form-group row">
+						<label class="col-lg-2" for="name">Name</label>
+						<div class="col-lg-10">
+							<input class=" form-control" name="name" id="name">
+						</div>
+					</div>
+					<div class="form-group row">
+						<label class="col-lg-2" for="description">Description</label>
+						<div class="col-lg-10">
+							<textarea class="form-control" name="description"
+								id="description"></textarea>
+						</div>
+					</div>
+					<div class="form-group panel panel-default">
+						<div class="panel-heading">
+							Metrics
+							<button class="btn btn-default" id="metrics_add_button">Add</button>
+						</div>
+						<div class="panel panel-body">
+							<div class="table-responsive">
+								<table class="table">
+									<thead>
+										<th class="col-lg-1">Enabled</th>
+										<th class="col-lg-1">Id</th>
+										<th class="col-lg-3">Name</th>
+										<th class="col-lg-1">Type</th>
+										<th class="col-lg-1">Remove</th>
+									</thead>
+									<tbody id="metrics_wrapper">
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+					<div class="form-group panel panel-default">
+						<div class="panel-heading">
+							Switches
+							<button class="btn btn-default" id="switches_add_button">Add</button>
+						</div>
+						<div class="panel panel-body">
+							<div class="table-responsive">
+								<table class="table">
+									<thead>
+										<th class="col-lg-1">Enabled</th>
+										<th class="col-lg-1">Id</th>
+										<th class="col-lg-3">Name</th>
+										<th class="col-lg-4">Description</th>
+										<th class="col-lg-1">Pin</th>
+										<th class="col-lg-1">Parent</th>
+										<th class="col-lg-1">Remove</th>
+									</thead>
+									<tbody id="switches_wrapper">
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+					<div class="form-group row">
+						<div class="col-lg-12 text-right">
+							<input class="btn btn-default" type="submit">
+						</div>
+					</div>
 
-	<form action="devices/upsert" method="POST">
-		<input name="id" id="id" type="hidden"> <label for="name">Name</label><input
-			name="name" id="name"> <label for="description">Description</label><input
-			name="description" id="description"> <label for="name">Metrics</label>
-		<input id="metrics_add_button" type="button" value="Add">
-		<div id="metrics_wrapper"></div>
-		<label for="name">Switches</label> <input id="switches_add_button"
-			type="button" value="Add">
-		<div id="switches_wrapper"></div>
-		<input type="submit">
-	</form>
-
+				</form>
+			</div>
+		</div>
+	</div>
+	<footer>
+		<div class="row">
+			<div class="col-lg-10 col-lg-offset-1 text-center">
+				2016 - <a href="https://github.com/jorgeamadosoria/dashard"><i
+					class="fa fa-github"></i></a>
+			</div>
+		</div>
+	</footer>
 	<script type="text/javascript" src="dist/js/jquery.min.js"></script>
 	<script type="text/javascript" src="dist/js/bootstrap.min.js"></script>
 	<script src="dist/js/jquery-ui.min.js"></script>
@@ -38,24 +120,35 @@
 	<script>
 		$(document).ready(initUpsert);
 	</script>
-
-	<div id="switch-template" class="hidden"><input id="enabled" name="enabled" type="checkbox" checked>
-		Id:<input id="id" readonly>Name:<input id="name">
-		Description:<input id="description"> Pin:<input id="pin">
-		Parent Id:<input id="parentId">
-		<button class="remove_field">Remove</button>
-	</div>
-
-	<div id="metrics-template" class="hidden">
-		<input id="id" type="hidden"><input id="enabled" name="enabled" type="checkbox" checked>Code:<input id="code">
-		Name:<input id="name">
-
-		<button id="type" name="type" class="btn btn-default"
-			data-iconset="weathericon" data-icon="wi-day-rain" role="iconpicker"></button>
-
-		<button class="btn btn-default remove_field">Remove</button>
-	</div>
-
+	<table>
+		<tr id="switch-template" class="hidden">
+			<td><input id="enabled" class="form-control" type="checkbox"
+				checked></td>
+			<td><span id="id"></span><input id="id" type="hidden"></td>
+			<td><input class="form-control" id="name"></td>
+			<td><textarea class="form-control" id="description"></textarea>
+			</td>
+			<td><input class="form-control" id="pin"></td>
+			<td><input class="form-control" id="parentId"></td>
+			<td>
+				<button class="btn btn-default remove_field">Remove</button>
+			</td>
+		</tr>
+	</table>
+	<table>
+		<tr id="metrics-template" class="hidden">
+			<td><input id="enabled" class="form-control" type="checkbox"
+				checked></td>
+			<td><span id="id"></span><input id="id" type="hidden"></td>
+			<td><input class="form-control" id="name"></td>
+			<td><button id="type" name="type" class="btn btn-default"
+					data-iconset="weathericon" data-icon="wi-day-rain"
+					role="iconpicker"></button></td>
+			<td>
+				<button class="btn btn-default remove_field">Remove</button>
+			</td>
+		</tr>
+	</table>
 </body>
 
 </html>
