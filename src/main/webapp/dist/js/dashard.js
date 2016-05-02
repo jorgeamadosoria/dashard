@@ -259,6 +259,9 @@ function updateSwitchState(data) {
 }
 
 function configDeviceList(data) {
+	$("#add_device").on("click",function(e){
+		$.get("upsert.html");
+	});
 	for (var x = 0; x < data.length; x++) {
 		var row = $("thead #deviceRow").clone();
 		$(row).removeClass("hidden");

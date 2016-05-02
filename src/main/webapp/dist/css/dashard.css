@@ -12,3 +12,8 @@
 .logo {
 	height:10em
 }
+
+.add_device {
+	position:fixed;
+	margin-top: -57px;
+}

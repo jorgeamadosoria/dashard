@@ -11,7 +11,8 @@
 	<header>
 		<div class="row">
 			<div class="col-lg-4">
-				<a href="index.html"><img class="logo" src="dist/img/Dashboard.png"></a>
+				<a href="index.html"><img class="logo"
+					src="dist/img/Dashboard.png"></a>
 			</div>
 			<div class="col-lg-8 page-header">
 				<h1>Dashboard for Arduino</h1>
@@ -19,34 +20,37 @@
 		</div>
 	</header>
 	<div class="row">
-		<div class="col-lg-12"><hr></div>
+		<div class="col-lg-12">
+			<hr>
+		</div>
 	</div>
 	<div class="row">
 		<div class="col-lg-10 col-lg-offset-1">
 			<div id="page-wrapper">
-				<div class="row">
-					<div class="col-lg-2">
-						<a href="upsert.html"><i class="fa fa-plus-circle fa-2x"></i>Add new device</a>
-					</div>
-				</div>
+				
 				<div class="row table-responsive">
-					<table id="devices" class="table">
-						<thead>
-							<th class="col-lg-3">Name</th>
-							<th class="col-lg-6">Description</th>
-							<th class="col-lg-3">Actions</th>
-							<tr id="deviceRow" class="hidden">
-								<td id="name"></td>
-								<td id="description"></td>
-								<td><a href="view.html?id="><i class=""></i>View</a>&nbsp;
-									<a href="upsert.html?id="><i class=""></i>Update</a>&nbsp; <a
-									href="devices/delete?id="><i class=""></i>Delete</a>&nbsp;</td>
-							</tr>
-						</thead>
-						<tbody id="devicesList">
+					<div class="panel panel-primary">
+						<div class="panel-body">
+							<span class=""><a href="upsert.html"><i class="overline fa fa-plus-circle fa-5x btn btn-xl"></i></a></span>
+							<table id="devices" class="table">
+								<thead>
+									<th class="col-lg-3">Name</th>
+									<th class="col-lg-7">Description</th>
+									<th class="col-lg-2">Actions</th>
+									<tr id="deviceRow" class="hidden">
+										<td id="name"></td>
+										<td id="description"></td>
+										<td><a href="view.html?id="><i class=""></i>View</a>&nbsp;
+											<a href="upsert.html?id="><i class=""></i>Update</a>&nbsp; <a
+											href="devices/delete?id="><i class=""></i>Delete</a>&nbsp;</td>
+									</tr>
+								</thead>
+								<tbody id="devicesList">
 
-						</tbody>
-					</table>
+								</tbody>
+							</table>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>
