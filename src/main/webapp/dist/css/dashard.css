@@ -4,16 +4,38 @@
     background-color: #fff;
 }
 
-.switch-margin {
-	margin-top: 10px;
-	margin-bottom: 10px
+.icon {
+	font-size: 5em;
+	margin:2px;
 }
 
+.huge {
+	font-size:3em;
+}
+
+.parent-switch {
+  position: relative;
+}
+
+.child-switch {
+  position: absolute;
+  transform: translateY(30%);
+}
 .logo {
 	height:10em
 }
 
 .add_device {
 	position:fixed;
-	margin-top: -57px;
+	margin-top: -58px;
+	background-color: #fff;
+}
+
+
+.panel_title {
+	position:fixed;
+	padding-left:5px;
+	padding-right:5px;
+	margin-top: -86px;
+	background-color: #fff;
 }
