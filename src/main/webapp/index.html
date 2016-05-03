@@ -31,7 +31,7 @@
 				<div class="row table-responsive">
 					<div class="panel panel-primary">
 						<div class="panel-body">
-							<div class="add_device"><a href="upsert.html"><i class="overline fa fa-plus-circle fa-5x btn btn-xl"></i></a></div>
+							<div class="add_device"><a href="upsert.html" title="Add device"><i class="overline fa fa-plus-circle fa-5x btn btn-xl"></i></a></div>
 							<table id="devices" class="table">
 								<thead>
 									<th class="col-lg-3">Name</th>
@@ -40,9 +40,9 @@
 									<tr id="deviceRow" class="hidden">
 										<td id="name"></td>
 										<td id="description"></td>
-										<td><a href="view.html?id="><i class=""></i>View</a>&nbsp;
-											<a href="upsert.html?id="><i class=""></i>Update</a>&nbsp; <a
-											href="devices/delete?id="><i class=""></i>Delete</a>&nbsp;</td>
+										<td><a href="view.html?id=" title="View"><i class="fa fa-eye"></i></a>&nbsp;
+											<a href="upsert.html?id=" title="Edit"><i class="fa fa-edit"></i></a>&nbsp; <a
+											href="devices/delete?id=" title="Delete"><i class="fa fa-trash"></i></a>&nbsp;</td>
 									</tr>
 								</thead>
 								<tbody id="devicesList">
@@ -64,6 +64,7 @@
 		</div>
 	</footer>
 	<script src="dist/js/jquery.min.js"></script>
+	<script src="dist/js/jquery.collapser.min.js"></script>
 	<script src="dist/js/jquery-ui.min.js"></script>
 	<script src="dist/js/dashard.js"></script>
 	<script>

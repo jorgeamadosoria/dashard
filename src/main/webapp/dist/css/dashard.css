@@ -13,14 +13,7 @@
 	font-size:3em;
 }
 
-.parent-switch {
-  position: relative;
-}
 
-.child-switch {
-  position: absolute;
-  transform: translateY(30%);
-}
 .logo {
 	height:10em
 }
@@ -33,9 +26,9 @@
 
 
 .panel_title {
-	position:fixed;
+	position:absolute;
 	padding-left:5px;
 	padding-right:5px;
-	margin-top: -86px;
+	margin-top: -26px;
 	background-color: #fff;
 }

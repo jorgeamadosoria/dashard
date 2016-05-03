@@ -37,19 +37,19 @@
 							<div class="panel-body">
 								<div class="panel_title">Device Info</div>
 								<div class="row">
-									<div class="col-lg-2">Name</div>
+									<div class="col-lg-2"><strong>Name</strong></div>
 									<div class="col-lg-10">
 										<div id="name"></div>
 									</div>
 								</div>
 								<div class="row">
-									<div class="col-lg-2">Description</div>
+									<div class="col-lg-2"><strong>Description</strong></div>
 									<div class="col-lg-10">
 										<div id="description"></div>
 									</div>
 								</div>
 								<div class="row">
-									<div class="col-lg-2">AccessId</div>
+									<div class="col-lg-2"><strong>AccessId</strong></div>
 									<div class="col-lg-10">
 										<div id="accessId"></div>
 									</div>
@@ -59,87 +59,95 @@
 					</div>
 				</div>
 				<div class="row">
-					<div class="col-lg-10 col-lg-offset-1">Metrics</div>
+					<div class="col-lg-10 col-lg-offset-1">
+						<div class="panel panel-primary">
+							<div class="panel-body">
+								<div class="panel_title">Metrics</div>
+								<div id="metrics_wrapper"></div>
+							</div>
+						</div>
+					</div>
 				</div>
 				<div class="row">
-					<div id="metrics_wrapper" class="col-lg-10 col-lg-offset-1"></div>
-				</div>
-				<div class="row">
-					<div class="col-lg-10 col-lg-offset-1">Switches</div>
-				</div>
-				<div class="row">
-					<div class="col-lg-10 col-lg-offset-1" id="switches_wrapper"></div>
+					<div class="col-lg-10 col-lg-offset-1">
+						<div class="panel panel-primary">
+							<div class="panel-body">
+								<div class="panel_title">Switches</div>
+								<div id="switches_wrapper"></div>
+							</div>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>
 	</div>
 	<footer>
-			<div class="row">
-				<div class="col-lg-10 col-lg-offset-1 text-center">
-					2016 - <a href="https://github.com/jorgeamadosoria/dashard"><i
-						class="fa fa-github"></i></a>
-				</div>
-			</div>
-
-		</footer>
-		<script src="dist/js/jquery.min.js"></script>
-		<script src="dist/js/bootstrap.min.js"></script>
-		<script src="dist/js/bootstrap-iconpicker.min.js"></script>
-		<script src="dist/js/iconset-weathericon-1.2.0.min.js"></script>
-		<script src="dist/js/jquery-ui.min.js"></script>
-		<script src="dist/js/dashard.js"></script>
-		<script>
-			initView();
-		</script>
-
-		<div id="metrics-template" class="hidden col-lg-4">
-			<div class="panel panel-primary">
-				<div class="panel-heading">
-					<div class="row">
-						<div class="col-xs-3">
-							<i id="type" class="icon"></i>
-						</div>
-						<div class="col-xs-9 text-right">
-							<div id="value" class="huge"></div>
-							<div>
-								<span id="name"></span>
-							</div>
-						</div>
-					</div>
-				</div>
-
-				<div class="panel-footer">
-					<span class="pull-left"></span> <span class="pull-right"> <a
-						href="#"><i class="fa fa-bar-chart"></i></a>
-					</span>
-					<div class="clearfix"></div>
-				</div>
-
+		<div class="row">
+			<div class="col-lg-10 col-lg-offset-1 text-center">
+				2016 - <a href="https://github.com/jorgeamadosoria/dashard"><i
+					class="fa fa-github"></i></a>
 			</div>
 		</div>
 
-		<div id="switches-template" class="hidden col-lg-4">
-			<div class="panel panel-primary">
-				<div class="panel-heading">
-					<div class="row">
-						<div class="col-xs-7">
-							<span id="name" class="huge"></span>
-						</div>
-						<div class="col-xs-3 parent-switch">
-							<div class="child-switch">
-								<div class="onoffswitch">
-									<input type="checkbox" name="state"
-										class="onoffswitch-checkbox" id="state"> <label
-										class="onoffswitch-label" for="myonoffswitch"> <span
-										class="onoffswitch-inner"></span> <span
-										class="onoffswitch-switch"></span>
-									</label>
-								</div>
-							</div>
+	</footer>
+	<script src="dist/js/jquery.min.js"></script>
+	<script src="dist/js/jquery.collapser.min.js"></script>
+	<script src="dist/js/bootstrap.min.js"></script>
+	<script src="dist/js/bootstrap-iconpicker.min.js"></script>
+	<script src="dist/js/iconset-weathericon-1.2.0.min.js"></script>
+	<script src="dist/js/jquery-ui.min.js"></script>
+	<script src="dist/js/dashard.js"></script>
+	<script>
+		initView();
+	</script>
+
+	<div id="metrics-template" class="hidden col-lg-4">
+		<div class="panel panel-primary">
+			<div class="panel-heading">
+				<div class="row">
+					<div class="col-xs-3">
+						<i id="type" class="icon"></i>
+					</div>
+					<div class="col-xs-9 text-right">
+						<div id="value" class="huge"></div>
+						<div>
+							<span id="name"></span>
 						</div>
 					</div>
 				</div>
 			</div>
+
+			<div class="panel-footer">
+				<span class="pull-left"></span> <span class="pull-right"> <a
+					href="#"><i class="fa fa-bar-chart"></i></a>
+				</span>
+				<div class="clearfix"></div>
+			</div>
+
 		</div>
+	</div>
+
+	<div id="switches-template" class="hidden col-lg-4">
+		<div class="panel panel-primary">
+			<div class="panel-heading">
+				<div class="row">
+					<div class="col-lg-12">
+						<span id="name" class="huge"></span>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-lg-4 col-lg-offset-4">
+						<div class="onoffswitch">
+							<input type="checkbox" name="state" class="onoffswitch-checkbox"
+								id="state"> <label class="onoffswitch-label"
+								for="myonoffswitch"> <span class="onoffswitch-inner"></span>
+								<span class="onoffswitch-switch"></span>
+							</label>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 </body>
 </html>

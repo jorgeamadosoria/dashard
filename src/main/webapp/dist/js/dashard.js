@@ -198,7 +198,12 @@ function configDeviceView(data) {
 	
 	$("#name").text(data.name);
 	$("#description").text(data.description);
-	$("#accessId").last().text(data.accessId);
+	$("#accessId").text(data.accessId).collapser({
+	    mode: 'chars',
+	    showText : "Show",
+	    hideText : "Hide",
+	    truncate: 20
+	});
 	for (var x = 0; x < data.metrics.length; x++) {
 		if (!data.metrics[x].enabled)
 			continue;
@@ -266,7 +271,6 @@ function configDeviceList(data) {
 		var row = $("thead #deviceRow").clone();
 		$(row).removeClass("hidden");
 		$(row).children().filter("#name").text(data[x].name);
-		$(row).children().filter("#accessId").text(data[x].accessId);
 		$(row).children().filter("#description").text(data[x].description);
 		row.html(row.html().replace(/\?id=/g, "?id=" + data[x].id));
 		$("#devicesList").append(row);
