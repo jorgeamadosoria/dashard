@@ -5,12 +5,23 @@ public class Switch extends BaseEntity {
     private Long    id;
     private String  name;
     private String  description;
+    private String  status;
     private int     state;
     private int     pin;
     private Long    deviceId;
     private Long    parentId;
 
     private boolean enabled;
+
+    
+    
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
 
     public boolean isEnabled() {
         return enabled;

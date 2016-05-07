@@ -32,10 +32,20 @@ public class ControlsDAOImpl implements ControlsDAO {
                 new BeanPropertyRowMapper<Switch>(Switch.class));
     }
 
+    public List<Switch> listPending(String accessId) {
+        return template.query(env.getProperty("select.pending.switches.by.device_id"), new Object[] { accessId },
+                new BeanPropertyRowMapper<Switch>(Switch.class));
+    }
+    
+    public List<Switch> list(String accessId) {
+        return template.query(env.getProperty("select.switches.by.device.accessId"), new Object[] { accessId },
+                new BeanPropertyRowMapper<Switch>(Switch.class));
+    }
+
     public void upsert(Long deviceId, List<Switch> entities) {
         for (Switch s : entities) {
             if (s.getName() != null)
-            upsert(deviceId, s);
+                upsert(deviceId, s);
         }
     }
 
@@ -47,10 +57,22 @@ public class ControlsDAOImpl implements ControlsDAO {
                     deviceId, entity.getParentId());
         else
             template.update(env.getProperty("update.switch"), entity.getName(), entity.getDescription(), entity.getPin(),
-                    entity.getParentId(), entity.isEnabled(),entity.getId());
+                    entity.getParentId(), entity.isEnabled(), entity.getId());
     }
 
     public void delete(Long id) {
         template.update(env.getProperty("delete.switch"), id);
+    }
+
+    @Override
+    public void syncSwitches(String accessId, List<Switch> switches) {
+        for (Switch s : switches)
+            template.update(env.getProperty("confirm.switch.status"), s.getState(), s.getPin(), accessId);
+    }
+
+    @Override
+    public void sendSwitches(String accessId, List<Switch> switches) {
+        for (Switch s : switches)
+            template.update(env.getProperty("send.switch.status"), s.getState(), s.getId());
     }
 }

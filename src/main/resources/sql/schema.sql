@@ -66,7 +66,8 @@ CREATE TABLE public.switches
   device_id integer,
   parent_id integer,
   state integer,
-  enabled boolean DEFAULT true
+  enabled boolean DEFAULT true,
+  status text DEFAULT 'SYNCED'::text
 )
 WITH (
   OIDS=FALSE
