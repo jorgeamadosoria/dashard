@@ -1,7 +1,11 @@
 #page-wrapper {
-    padding: 10px 10px 10px 10px;
+    padding: 50px 10px 10px 10px;
     min-height: 568px;
     background-color: #fff;
+}
+
+#page-wrapper table{
+    margin-top: 20px;
 }
 
 .icon {
@@ -15,11 +19,11 @@
 
 
 .logo {
-	height:10em
+	height:100%
 }
 
-.add_device {
-	position:fixed;
+.add_device,.add_user {
+	position:absolute;
 	margin-top: -58px;
 	background-color: #fff;
 }

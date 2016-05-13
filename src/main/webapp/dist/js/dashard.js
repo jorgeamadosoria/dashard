@@ -49,6 +49,40 @@ function initList() {
 
 }
 
+function initUsers() {
+	$("#add_user").on("click",function(e){ 
+		alert($("#usersList").children("tr").length);
+		addUserRow($("#usersList").children("tr").length,{username:"",password:""});
+	});
+	$.ajax({
+		url : "users/list",
+		method : "GET",
+		success : configUsersList
+	});
+
+}
+
+
+function configUsersList(data) {
+	for (var x = 0; x < data.length; x++) {
+		addUserRow(x,data[x]);
+	}
+}
+
+function addUserRow(index,user){
+	alert(index);
+	var row = $("thead #userRow").clone();
+	$(row).removeClass("hidden");
+/*	alert(user.username);
+	alert(user.password);*/
+	alert($(row).children().filter("#username").html());
+	$(row).filter("#username").attr("name","users[" + index + "].username").text(user.username);
+	$(row).filter("#password").attr("name","users[" + index + "].password").text(user.password);
+	row.html(row.html().replace(/\?username=/g, "?username=" + user.username));
+	$("#usersList").append(row);
+}
+
+
 function upsertMetricsAddButton(x) {
 	var wrapper = $("#metrics_wrapper"); // Fields wrapper
 	var add_button = $("#metrics_add_button"); // Add button ID
@@ -276,6 +310,7 @@ function configDeviceList(data) {
 		$("#devicesList").append(row);
 	}
 }
+
 // ------------------------------------------------
 function initView() {
 	var id = $.getUrlVar('id');

@@ -9,49 +9,68 @@
 </head>
 <body>
 	<header>
-		<div class="row">
-			<div class="col-lg-4">
-				<a href="index.html"><img class="logo"
+		<nav class="navbar navbar-default">
+			<div class="navbar-header">
+				<a class="navbar-brand" href="list.html"><img class="logo"
 					src="dist/img/Dashboard.png"></a>
 			</div>
-			<div class="col-lg-8 page-header">
-				<h1>Dashboard for Arduino</h1>
+			<div class="container-fluid">
+				<!-- Brand and toggle get grouped for better mobile display -->
+				<div class="navbar-header">
+					<a class="navbar-brand" href="#">Dashboard for Arduino</a>
+				</div>
+
+				<!-- Collect the nav links, forms, and other content for toggling -->
+				<div class="collapse navbar-collapse">
+					<ul class="nav navbar-nav navbar-right">
+						<li><a href="/users.html" title="users"><i
+								class="fa fa-2x fa-users"></i></a></li>
+						<li><a href="/logout" title="logout"><i
+								class="fa fa-2x fa-sign-out"></i></a></li>
+					</ul>
+				</div>
+				<!-- /.navbar-collapse -->
 			</div>
-		</div>
+			<!-- /.container-fluid -->
+		</nav>
 	</header>
-	<div class="row">
-		<div class="col-lg-12">
-			<hr>
-		</div>
-	</div>
 	<div class="row">
 		<div class="col-lg-10 col-lg-offset-1">
 			<div id="page-wrapper">
-				
-				<div class="row table-responsive">
-					<div class="panel panel-primary">
-						<div class="panel-body">
-							<div class="add_device"><a href="upsert.html" title="Add device"><i class="overline fa fa-plus-circle fa-5x btn btn-xl"></i></a></div>
-							<table id="devices" class="table">
-								<thead>
-									<th class="col-lg-3">Name</th>
-									<th class="col-lg-7">Description</th>
-									<th class="col-lg-2">Actions</th>
-									<tr id="deviceRow" class="hidden">
-										<td id="name"></td>
-										<td id="description"></td>
-										<td><a href="view.html?id=" title="View"><i class="fa fa-eye"></i></a>&nbsp;
-											<a href="upsert.html?id=" title="Edit"><i class="fa fa-edit"></i></a>&nbsp; <a
-											href="devices/delete?id=" title="Delete"><i class="fa fa-trash"></i></a>&nbsp;</td>
-									</tr>
-								</thead>
-								<tbody id="devicesList">
+				<form action="users/upsert" method="POST" class="form-horizontal">
+					<div class="row table-responsive">
+						<div class="panel panel-primary">
+							<div class="panel-body">
+								<div class="add_user">
+									<a id="add_user" title="Add User"><i
+										class="overline fa fa-plus-circle fa-5x btn btn-xl"></i></a>
+								</div>
+								<table id="users" class="table">
+									<thead>
+										<th class="col-lg-4">Username</th>
+										<th class="col-lg-3">Password</th>
+										<th class="col-lg-3">Confirm</th>
+										<th class="col-lg-2">Actions</th>
+										<tr id="userRow" class="hidden">
+											<td><input id="username" ></td>
+											<td><input id="password" ></td>
+											<td><a href="users/delete?username=" title="Delete"><i
+													class="fa fa-trash"></i></a>&nbsp;</td>
+										</tr>
+									</thead>
+									<tbody id="usersList">
 
-								</tbody>
-							</table>
+									</tbody>
+								</table>
+							</div>
 						</div>
 					</div>
-				</div>
+					<div class="form-group row">
+						<div class="col-lg-12 text-right">
+							<input class="btn btn-default" type="submit">
+						</div>
+					</div>
+				</form>
 			</div>
 		</div>
 	</div>
@@ -68,7 +87,7 @@
 	<script src="dist/js/jquery-ui.min.js"></script>
 	<script src="dist/js/dashard.js"></script>
 	<script>
-		$(document).ready(initList);
+		$(document).ready(initUsers);
 	</script>
 </body>
 

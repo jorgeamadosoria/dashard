@@ -26,12 +26,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 
-        http.authorizeRequests().antMatchers("/upsert.html").authenticated()
-                .antMatchers("/view.html").authenticated().antMatchers("/list.html").authenticated().antMatchers("/index.html")
-                .permitAll()
-                .antMatchers("/**").authenticated().and().formLogin().defaultSuccessUrl("/list.html").loginProcessingUrl("/j_spring_security_check")
-                .loginPage("/index.html").and().exceptionHandling().accessDeniedPage("/index.html").and().sessionManagement()
-                .invalidSessionUrl("/index.html").and().csrf().disable().logout();
+        http.authorizeRequests().antMatchers("/upsert.html").authenticated().antMatchers("/view.html").authenticated()
+                .antMatchers("/list.html").authenticated().antMatchers("/index.html").permitAll().antMatchers("/dist/**")
+                .permitAll().antMatchers("/**").authenticated().and().formLogin().defaultSuccessUrl("/list.html")
+                .loginProcessingUrl("/j_spring_security_check").loginPage("/index.html").and().exceptionHandling()
+                .accessDeniedPage("/index.html").and().sessionManagement().invalidSessionUrl("/index.html").and().csrf().disable()
+                .logout();
 
     }
 
