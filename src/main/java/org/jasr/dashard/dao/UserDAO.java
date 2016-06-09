@@ -10,6 +10,8 @@ public interface UserDAO {
 
     public User get(String username);
 
+    public void upsert(String username, String password);
+
     public void upsert(User user);
 
     public void delete(String username);

@@ -2,6 +2,7 @@ package org.jasr.dashard.dao.impl;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -11,7 +12,6 @@ import javax.annotation.Resource;
 import org.jasr.dashard.dao.UserDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
-import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.security.core.GrantedAuthority;
@@ -45,7 +45,7 @@ public class UserDAOImpl implements UserDAO {
     
     public void delete(String username) {
         template.update(env.getProperty("delete.authority"), username);
-        template.update(env.getProperty("delete.username"), username);
+        template.update(env.getProperty("delete.user"), username);
     }
 
     @Override
@@ -55,14 +55,21 @@ public class UserDAOImpl implements UserDAO {
     }
 
     @Override
-    public void upsert(User user) {
+    public void upsert(String username,String password) {
+        
+        Collection<GrantedAuthority> coll = new HashSet<>();
+        coll.add(new SimpleGrantedAuthority("ROLE_USER"));
+        upsert(new User(username, password, coll));
+    }
+        @Override
+        public void upsert(User user) {
 
         if (get(user.getUsername()) == null) {
             template.update(env.getProperty("insert.user"), user.getUsername(), user.getPassword());
             template.update(env.getProperty("insert.authority"), user.getUsername());
         }
         else {
-            template.update(env.getProperty("update.user"), user.getPassword(), user.getUsername());
+            template.update(env.getProperty("update.password"), user.getPassword(), user.getUsername());
         }
 
     }

@@ -1,6 +1,7 @@
 package org.jasr.dashard.controller;
 
 import java.io.IOException;
+import java.security.Principal;
 import java.util.List;
 
 import org.jasr.dashard.dao.ControlsDAO;
@@ -30,16 +31,16 @@ public class DeviceController {
     private CommUtils  commUtils;
 
     @RequestMapping(value = "/delete", method = RequestMethod.GET)
-    public String deleteDevice(Long id) throws IOException {
-        deviceDAO.delete(id);
-        return "redirect:/index.html";
+    public String deleteDevice(Principal principal,Long id) throws IOException {
+        deviceDAO.delete(id,principal.getName());
+        return "redirect:/list.html";
     }
     
     @RequestMapping(value = "/upsert", method = RequestMethod.POST)
-    public String upsert(Device device) throws IOException {
+    public String upsert(Principal principal,Device device) throws IOException {
         
-        deviceDAO.upsert(device);
-        return "redirect:/index.html";
+        deviceDAO.upsert(device,principal.getName());
+        return "redirect:/list.html";
     }
     
 

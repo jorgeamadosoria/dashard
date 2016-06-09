@@ -1,5 +1,6 @@
 package org.jasr.dashard.controller;
 
+import java.security.Principal;
 import java.util.List;
 
 import org.jasr.dashard.dao.ControlsDAO;
@@ -31,9 +32,9 @@ public class DeviceSyncController {
     private CommUtils   commUtils;
 
     @RequestMapping(value = "/init", method = RequestMethod.POST)
-    public DeviceDTO init(@PathVariable String accessId) {
+    public DeviceDTO init(Principal principal, @PathVariable String accessId) {
 
-        Device device = deviceDAO.get(accessId);
+        Device device = deviceDAO.get(accessId,principal.getName());
         if (device != null)
             return new DeviceDTO(device.getMetrics(), device.getSwitches());
         else

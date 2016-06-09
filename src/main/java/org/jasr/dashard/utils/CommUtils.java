@@ -15,7 +15,7 @@ public class CommUtils {
 
     private SecureRandom random = new SecureRandom();
 
-    public String generateAccessId() {
+    public String generateAccessId(String user) {
         String str = "";
         Device device = null;
         do {
@@ -24,7 +24,7 @@ public class CommUtils {
 
             }
 
-            device = deviceDAO.get(str);
+            device = deviceDAO.get(str,user);
         }
         while (device != null);
         return str;

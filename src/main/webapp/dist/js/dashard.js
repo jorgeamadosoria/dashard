@@ -15,8 +15,20 @@ $.extend({
 	}
 });
 
-function initUpsert() {
 
+function initUsername(){
+	$.ajax({
+		url : "data/username",
+		method : "GET",
+		success : function(data){
+			$("a#user").text(data);
+		}
+	});
+}
+
+function initUpsert() {
+	initUsername();
+	
 	var id = $.getUrlVar('id');
 	if (id == null) {
 		var data = {
@@ -40,7 +52,8 @@ function initUpsert() {
 }
 
 function initList() {
-
+	initUsername();
+	
 	$.ajax({
 		url : "data/list",
 		method : "GET",
@@ -50,12 +63,21 @@ function initList() {
 }
 
 function initUsers() {
+	
+	initUsername();
+	
 	$("#add_user").on("click",function(e){ 
-		alert($("#usersList").children("tr").length);
 		addUserRow($("#usersList").children("tr").length,{username:"",password:""});
 	});
+	
+	$("tbody#usersList").on("click","a#edit_link",function(e){ 
+		$("form#user_form").find("input#username").val($(this).attr("data-user"));
+		$("form#user_form").find("input#password").val($(this).attr("data-password"));
+		return false;
+	});
+	
 	$.ajax({
-		url : "users/list",
+		url : "	users/list",
 		method : "GET",
 		success : configUsersList
 	});
@@ -65,19 +87,17 @@ function initUsers() {
 
 function configUsersList(data) {
 	for (var x = 0; x < data.length; x++) {
-		addUserRow(x,data[x]);
+		addUserRow(data[x]);
 	}
 }
 
-function addUserRow(index,user){
-	alert(index);
+function addUserRow(user){
 	var row = $("thead #userRow").clone();
 	$(row).removeClass("hidden");
-/*	alert(user.username);
-	alert(user.password);*/
-	alert($(row).children().filter("#username").html());
-	$(row).filter("#username").attr("name","users[" + index + "].username").text(user.username);
-	$(row).filter("#password").attr("name","users[" + index + "].password").text(user.password);
+	$(row).find("#username").text(user.username);
+	$(row).find("#password").text(user.password);
+	$(row).find("a#edit_link").attr("data-password",user.password);
+	$(row).find("a#edit_link").attr("data-user",user.username);
 	row.html(row.html().replace(/\?username=/g, "?username=" + user.username));
 	$("#usersList").append(row);
 }
@@ -313,6 +333,9 @@ function configDeviceList(data) {
 
 // ------------------------------------------------
 function initView() {
+	
+	initUsername();
+	
 	var id = $.getUrlVar('id');
 	$.ajax({
 		url : "data/view",

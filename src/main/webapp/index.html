@@ -8,57 +8,59 @@
 <link href="dist/css/dashard.css" rel="stylesheet">
 </head>
 <body>
-	<header>
-		<nav class="navbar navbar-default">
+	<nav class="navbar navbar-default">
+		<div class="navbar-header">
+			<a class="navbar-brand" href="index.html"><img class="logo"
+				src="dist/img/Dashboard.png"></a>
+		</div>
+		<div class="container-fluid">
+			<!-- Brand and toggle get grouped for better mobile display -->
 			<div class="navbar-header">
-				<a class="navbar-brand" href="index.html"><img class="logo"
-					src="dist/img/Dashboard.png"></a>
+				<a class="navbar-brand" href="#">Dashboard for Arduino</a>
 			</div>
-			<div class="container-fluid">
-				<!-- Brand and toggle get grouped for better mobile display -->
-				<div class="navbar-header">
-					<a class="navbar-brand" href="#">Dashboard for Arduino</a>
-				</div>
 
-				<!-- /.navbar-collapse -->
-			</div>
-			<!-- /.container-fluid -->
-		</nav>
-	</header>
-	<div class="row">
-		<div class="col-lg-4 col-lg-offset-4">
-			<div id="page-wrapper">
-				<form class="form-horizontal" id="login" method="POST"
-					action="/j_spring_security_check">
-					<div class="row form-group">
-						<label for="username" class="col-md-4 control-label">User</label>
-						<div class="col-md-8">
-							<input class="form-control" name="username">
+			<!-- /.navbar-collapse -->
+		</div>
+		<!-- /.container-fluid -->
+	</nav>
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-4 col-lg-offset-4">
+				<div id="page-wrapper">
+					<form class="form-horizontal" id="login" method="POST"
+						action="/j_spring_security_check">
+						<div class="row form-group">
+							<label for="username" class="col-md-4 control-label">User</label>
+							<div class="col-md-8">
+								<input class="form-control" name="username">
+							</div>
 						</div>
-					</div>
-					<div class="row form-group">
-						<label for="password" class="col-md-4 control-label">Password</label>
-						<div class="col-md-8">
-							<input class="form-control" type="password" name="password">
+						<div class="row form-group">
+							<label for="password" class="col-md-4 control-label">Password</label>
+							<div class="col-md-8">
+								<input class="form-control" type="password" name="password">
+							</div>
 						</div>
-					</div>
-					<div class="row form-group pull-right">
-						<div class="col-md-12">
-							<button id="submit" type="submit" class="btn btn-primary">Login</button>
+						<div class="row form-group pull-right">
+							<div class="col-md-12">
+								<button id="submit" type="submit" class="btn btn-primary">Login</button>
+							</div>
 						</div>
-					</div>
-				</form>
+					</form>
+				</div>
 			</div>
 		</div>
 	</div>
-	<footer>
-		<div class="row">
-			<div class="col-lg-10 col-lg-offset-1 text-center">
-				2016 - <a href="https://github.com/jorgeamadosoria/dashard"><i
-					class="fa fa-github"></i></a>
+		<footer>
+			<div class="container">
+				<div class="row">
+					<div class="col-lg-10 col-lg-offset-1 text-center">
+						2016 - <a href="https://github.com/jorgeamadosoria/dashard"><i
+							class="fa fa-github"></i></a>
+					</div>
+				</div>
 			</div>
-		</div>
-	</footer>
+		</footer>
 	<script src="dist/js/jquery.min.js"></script>
 	<script src="dist/js/jquery.collapser.min.js"></script>
 	<script src="dist/js/jquery-ui.min.js"></script>

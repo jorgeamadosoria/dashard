@@ -57,7 +57,7 @@ public class ControlsDAOImpl implements ControlsDAO {
                     deviceId, entity.getParentId());
         else
             template.update(env.getProperty("update.switch"), entity.getName(), entity.getDescription(), entity.getPin(),
-                    entity.getParentId(), entity.isEnabled(), entity.getId());
+                    entity.getParentId(), entity.isEnabled(), entity.getStatus(),entity.getId());
     }
 
     public void delete(Long id) {

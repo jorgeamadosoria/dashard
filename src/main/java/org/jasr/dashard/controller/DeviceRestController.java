@@ -1,6 +1,7 @@
 package org.jasr.dashard.controller;
 
 import java.io.IOException;
+import java.security.Principal;
 import java.util.List;
 
 import org.jasr.dashard.dao.ControlsDAO;
@@ -11,7 +12,6 @@ import org.jasr.dashard.domain.Metrics;
 import org.jasr.dashard.domain.Switch;
 import org.jasr.dashard.utils.CommUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -44,16 +44,19 @@ public class DeviceRestController {
         return metricsDAO.list(id);
     }
 
-
+    @RequestMapping(value = "/username", method = RequestMethod.GET)
+    public String get(Principal principal) {
+        return principal.getName();
+    }
     
     @RequestMapping(value = "/view", method = RequestMethod.GET)
-    public Device get(Long id) {
-        return deviceDAO.get(id);
+    public Device get(Principal principal,Long id) {
+        return deviceDAO.get(id,principal.getName());
     }
 
     @RequestMapping(value = "/list", method = RequestMethod.GET)
-    public List<Device> list() {
-        return deviceDAO.list();
+    public List<Device> list(Principal principal) {
+        return deviceDAO.list(principal.getName());
 
     }
 

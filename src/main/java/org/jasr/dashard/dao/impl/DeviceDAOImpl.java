@@ -8,7 +8,6 @@ import org.jasr.dashard.dao.ControlsDAO;
 import org.jasr.dashard.dao.DeviceDAO;
 import org.jasr.dashard.dao.MetricsDAO;
 import org.jasr.dashard.domain.Device;
-import org.jasr.dashard.domain.Metrics;
 import org.jasr.dashard.utils.CommUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
@@ -34,20 +33,20 @@ public class DeviceDAOImpl implements DeviceDAO {
     @Autowired
     private MetricsDAO   metricsDAO;
 
-    public List<Device> list() {
-        List<Device> devices = template.query(env.getProperty("list.devices"), new BeanPropertyRowMapper<Device>(Device.class));
+    public List<Device> list(String user) {
+        List<Device> devices = template.query(env.getProperty("list.devices"), new Object[] { user },new BeanPropertyRowMapper<Device>(Device.class));
         return devices;
     }
-
-    public void upsert(Device entity) {
+            
+    public void upsert(Device entity,String user) {
         Device tempEntity = entity;
         if (entity.getId() == null || entity.getId() == 0) {
-            entity.setAccessId(commUtils.generateAccessId());
-            template.update(env.getProperty("insert.device"), entity.getName(), entity.getDescription(), entity.getAccessId());
-            tempEntity = get(entity.getAccessId());
+            entity.setAccessId(commUtils.generateAccessId(user));
+            template.update(env.getProperty("insert.device"), entity.getName(), entity.getDescription(), entity.getAccessId(),user);
+            tempEntity = get(entity.getAccessId(),user);
         }
         else {
-            template.update(env.getProperty("update.device"), entity.getName(), entity.getDescription(), entity.isEnabled(),entity.getId());
+            template.update(env.getProperty("update.device"), entity.getName(), entity.getDescription(), entity.isEnabled(),entity.getId(),user);
             tempEntity = entity;
         }
 
@@ -56,10 +55,10 @@ public class DeviceDAOImpl implements DeviceDAO {
         if (entity.getSwitches() != null)
             controlsDAO.upsert(tempEntity.getId(), entity.getSwitches());
     }
+          
+    public Device get(String accessId,String user) {
 
-    public Device get(String accessId) {
-
-        List<Device> devices = template.query(env.getProperty("select.device.accessId"), new Object[] { accessId },
+        List<Device> devices = template.query(env.getProperty("select.device.accessId"), new Object[] { accessId,user },
                 new BeanPropertyRowMapper<Device>(Device.class));
 
         return populateDevice(devices);
@@ -77,20 +76,19 @@ public class DeviceDAOImpl implements DeviceDAO {
         }
         return null;
     }
+    public Device get(Long id,String user) {
 
-    public Device get(Long id) {
-
-        List<Device> devices = template.query(env.getProperty("select.device"), new Object[] { id },
+        List<Device> devices = template.query(env.getProperty("select.device"), new Object[] { id,user },
                 new BeanPropertyRowMapper<Device>(Device.class));
 
         return populateDevice(devices);
     }
 
-    public void delete(Long id) {
+    public void delete(Long id,String user) {
         template.update(env.getProperty("delete.metrics.by.device"), id);
         template.update(env.getProperty("delete.switches.by.device"), id);
 
-        template.update(env.getProperty("delete.device"), id);
+        template.update(env.getProperty("delete.device"), id,user);
     }
 
 }

@@ -1,6 +1,5 @@
 #page-wrapper {
     padding: 50px 10px 10px 10px;
-    min-height: 568px;
     background-color: #fff;
 }
 
@@ -28,6 +27,17 @@
 	background-color: #fff;
 }
 
+body {
+	min-height:100%;
+}
+
+footer {
+	background-color: #f8f8f8;
+	bottom: 0;
+	position:relative;
+	padding:10px;
+	width:100%
+}
 
 .panel_title {
 	position:absolute;
