@@ -34,7 +34,7 @@ body {
 footer {
 	background-color: #f8f8f8;
 	bottom: 0;
-	position:relative;
+	position:fixed;
 	padding:10px;
 	width:100%
 }
