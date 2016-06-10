@@ -3,6 +3,7 @@ package org.jasr.dashard.config;
 import javax.sql.DataSource;
 
 import org.flywaydb.core.Flyway;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
@@ -17,7 +18,21 @@ import com.zaxxer.hikari.HikariDataSource;
 @EnableTransactionManagement
 @PropertySource("classpath:sql.properties")
 class PersistenceConfig {
+	
+	@Value("${OPENSHIFT_POSTGRESQL_DB_HOST}")
+	private String host = "localhost";
 
+	@Value("${OPENSHIFT_POSTGRESQL_DB_PORT}")
+	private String port = "5432";
+	
+	@Value("${OPENSHIFT_POSTGRESQL_DB_USERNAME}")
+	private String user = "postgres";
+	
+	@Value("${OPENSHIFT_POSTGRESQL_DB_PASSWORD}")
+	private String pass = "root";
+	
+	private String db = "dashard";
+	
     @Bean(initMethod = "migrate")
     Flyway flyway() {
         Flyway flyway = new Flyway();
@@ -39,11 +54,14 @@ class PersistenceConfig {
     }
     @Bean
     public DataSource dataSource() {
+    	
+    	String jdbcUrl = "jdbc:postgresql://" + host +":" + port +"/"+db;
+    	
         HikariConfig config = new HikariConfig();
         config.setDriverClassName("org.postgresql.Driver");
-        config.setJdbcUrl("jdbc:postgresql://localhost:5432/dashard");
-        config.setUsername("postgres");
-        config.setPassword("root");
+        config.setJdbcUrl(jdbcUrl);
+        config.setUsername(user);
+        config.setPassword(pass);
         config.addDataSourceProperty("cachePrepStmts", "true");
         config.addDataSourceProperty("prepStmtCacheSize", "250");
         config.addDataSourceProperty("prepStmtCacheSqlLimit", "2048");
