@@ -21,7 +21,9 @@ function initUsername(){
 		url : "data/username",
 		method : "GET",
 		success : function(data){
-			$("a#user").text(data);
+			$("a#user").text(data.name);
+			alert(data.authorities);
+			//$("a#users_link").hide();
 		}
 	});
 }
